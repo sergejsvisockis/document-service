@@ -32,3 +32,5 @@ Non-functional requirements:
     * Have a capability to retrieve only a metadata of the underlying document (separate endpoint) by its ID - assuming
       concurrent UI which has to popup metadata for the underlying table.
     * Will read document metadata from the same database (no read replica is needed)
+* Both applications `read` and `write` have to be deployed Docker containerised and deployed as K8S PODs into the AWS
+  EKS cluster
