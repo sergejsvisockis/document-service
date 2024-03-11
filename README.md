@@ -1,4 +1,4 @@
-## Document Service
+# Document Service
 
 Let's imagine that the following service is a subset of the SOA platform that serves some business purpose let it be
 insurance platform that generates some related documents.
@@ -35,3 +35,6 @@ Non-functional requirements:
     * Will read document metadata from the same database (no read replica is needed)
 * Both applications `read` and `write` have to be deployed Docker containerised and deployed as K8S PODs into the AWS
   EKS cluster
+
+## High level design
+![High level design](./high-level.png)
