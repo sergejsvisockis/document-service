@@ -5,7 +5,7 @@ insurance platform that generates some related documents.
 
 Functional requirements:
 
-* The following service has to generate the following PDF documents:
+* The following service has to generate these PDF documents:
     * Policy
     * Claim
     * Invoice
@@ -15,6 +15,33 @@ Functional requirements:
 * There has to be a capability to download these documents upo necessity from the storage
 * An event upon generation of each event has to be published into the Service Bus (Kafka Streaming in this case) to be
   eventually consistent
+* Each document has to contain the following set of fields:
+  * Policy
+    * Name of Insured
+    * Name of the Owner
+    * Policy number
+    * Phone number
+    * Address
+    * City
+    * Date of Birth
+    * Relationship to Insured
+    * Premium
+    * LOB (Line of business)
+  * Claim
+    * Name
+    * Address
+    * City
+    * Policy number
+    * Claim number
+    * Place of incident
+    * Short description
+  * Invoice
+    * Policy Number
+      Name of Insured
+    * Name of the Owner
+    * Policy number
+    * Phone number
+    * Total Price
 
 Non-functional requirements:
 
