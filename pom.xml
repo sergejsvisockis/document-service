@@ -14,11 +14,12 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-boot.version>3.2.3</spring-boot.version>
+        <boat-maven-plugin.version>0.17.31</boat-maven-plugin.version>
     </properties>
 
     <modules>
-        <module>document-read-service</module>
-        <module>document-write-service</module>
+        <module>api</module>
+        <module>services</module>
     </modules>
 
     <dependencyManagement>
@@ -32,5 +33,17 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.backbase.oss</groupId>
+                    <artifactId>boat-maven-plugin</artifactId>
+                    <version>${boat-maven-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
 </project>

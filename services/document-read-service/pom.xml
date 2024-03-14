@@ -10,14 +10,24 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>document-write-service</artifactId>
+    <artifactId>document-read-service</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sergejs.documentservice</groupId>
+            <artifactId>document-read-service-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
+
 
     <build>
         <plugins>
@@ -34,7 +44,7 @@
                 <configuration>
                     <classifier>fat</classifier>
                     <attach>false</attach>
-                    <mainClass>io.github.sergejsvisockis.documentservice.write.DocumentWriteApplication</mainClass>
+                    <mainClass>io.github.sergejsvisockis.documentservice.read.DocumentReadApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

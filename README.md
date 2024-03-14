@@ -16,32 +16,30 @@ Functional requirements:
 * An event upon generation of each event has to be published into the Service Bus (Kafka Streaming in this case) to be
   eventually consistent
 * Each document has to contain the following set of fields:
-  * Policy
-    * Name of Insured
-    * Name of the Owner
-    * Policy number
-    * Phone number
-    * Address
-    * City
-    * Date of Birth
-    * Relationship to Insured
-    * Premium
-    * LOB (Line of business)
-  * Claim
-    * Name
-    * Address
-    * City
-    * Policy number
-    * Claim number
-    * Place of incident
-    * Short description
-  * Invoice
-    * Policy Number
-      Name of Insured
-    * Name of the Owner
-    * Policy number
-    * Phone number
-    * Total Price
+    * Policy
+        * Name of Insured
+        * Name of the Owner
+        * Policy number
+        * Phone number
+        * Address
+        * City
+        * Date of Birth
+        * Relationship to Insured
+        * Premium
+        * LOB (Line of business)
+    * Claim
+        * Address
+        * City
+        * Policy number
+        * Claim number
+        * Place of incident
+        * Short description
+    * Invoice
+        * Policy Number
+          Name of Insured
+        * Name of the Owner
+        * Phone number
+        * Total Price
 
 Non-functional requirements:
 
@@ -49,19 +47,23 @@ Non-functional requirements:
   makes these.
 * CQRS pattern has to be leveraged to separate reads from writes and allow concurrent executions
   as well as independent scalability.
-* Document write service will:
+* An API first approach has to be used having a separate Open API schema for each endpoint
+* Document write service:
     * Save the document metadata into the write master database
     * Invoke an external document generation engine and generate PDF documents
     * Place the aforementioned documents into the AWS S3 bucket
-* Document read service will:
+    * The UI will create only one type of document at the same time therefore each document has have a separate endpoint
+    * Each endpoint is invoked having a different load and workflow from the UI side
+* Document read service:
     * Retrieve PDF from the AWS S3 bucket and return upon invocation of the underlying endpoint with
       the `Content-type: application/pdf` header (assuming the UI has to allow capability to download the PDF from the
       S3 bucket)
     * Have a capability to retrieve only a metadata of the underlying document (separate endpoint) by its ID - assuming
       concurrent UI which has to popup metadata for the underlying table.
     * Will read document metadata from the same database (no read replica is needed)
-* Both applications `read` and `write` have to be deployed Docker containerised and deployed as K8S PODs into the AWS
+* Both applications `read` and `write` have to be Docker containerised and deployed as K8S PODs into the AWS
   EKS cluster
 
 ## High level design
+
 ![High level design](./high-level.png)
