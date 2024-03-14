@@ -1,4 +1,4 @@
-package com.sergejs.documentservice.write;
+package io.github.sergejsvisockis.documentservice.write;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

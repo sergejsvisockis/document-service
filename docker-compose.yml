@@ -1,0 +1,57 @@
+version: '3.8'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    command:
+      [ "postgres", "-c", "wal_level=logical" ]
+    volumes:
+      - "vol_postgres:/var/lib/postgresql/data"
+    networks:
+      - metadata_net
+
+  document-read-service:
+    image: document/contexts:document-read-service-latest
+    container_name: document-read-service
+    build:
+      context: ./document-read-service
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+      - "1081:1081"
+    environment:
+      JAVA_OPTS: '-Xdebug -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:1081 -Xms64m -Xmx512m'
+      server.port: 8081
+    depends_on:
+      - db
+    networks:
+      - metadata_net
+
+  document-write-service:
+    image: document/contexts:document-write-service-latest
+    container_name: document-write-service
+    build:
+      context: ./document-write-service
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+      - "1080:1080"
+    environment:
+      JAVA_OPTS: '-Xdebug -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:1080 -Xms64m -Xmx512m'
+      server.port: 8080
+    depends_on:
+      - db
+    networks:
+      - metadata_net
+
+volumes:
+  vol_postgres:
+
+networks:
+  metadata_net:
+    driver: bridge
