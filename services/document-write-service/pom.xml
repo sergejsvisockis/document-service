@@ -22,6 +22,24 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>0.2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>2.2.21</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.sergejs.documentservice</groupId>
             <artifactId>document-write-service-api</artifactId>
             <version>${project.version}</version>
@@ -45,6 +63,37 @@
                     <attach>false</attach>
                     <mainClass>io.github.sergejsvisockis.documentservice.write.DocumentWriteApplication</mainClass>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.backbase.oss</groupId>
+                <artifactId>boat-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>bundle-service-specs</id>
+                        <!-- bundles the open api specs, and sets the proper version number in the filename -->
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>bundle</goal>
+                        </goals>
+                        <configuration>
+                            <input>${project.basedir}/../../api/document-write-service-api/src/main/resources/</input>
+                            <output>${project.build.directory}/specs/</output>
+                            <versionFileName>true</versionFileName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-service-api-code</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate-spring-boot-embedded</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.build.directory}/specs/document-write-service-api-v1.0.0.yaml</inputSpec>
+                            <apiPackage>io.github.sergejsvisockis.documentservice.api.service.v1</apiPackage>
+                            <modelPackage>io.github.sergejsvisockis.documentservice.api.service.v1.model</modelPackage>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
