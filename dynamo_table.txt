@@ -1,0 +1,20 @@
+create table '{
+  "TableDescription": {
+    "AttributeDefinitions": [
+      {
+        "AttributeName": "documentId","AttributeType": "S"
+      }
+    ],"TableName": "DocumentMetadata",
+    "KeySchema": [
+      {
+        "AttributeName": "documentId","KeyType": "HASH"
+      }
+    ],
+    "ProvisionedThroughput": {
+      "ReadCapacityUnits": 1,"WriteCapacityUnits": 1
+    },
+    "TableClassSummary": {
+      "TableClass": "STANDARD"
+    }
+  }
+}';
