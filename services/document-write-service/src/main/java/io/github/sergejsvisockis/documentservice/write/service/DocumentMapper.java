@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-interface DocumentMapper {
+public interface DocumentMapper {
 
     @Mapping(ignore = true, target = "id")
     @Mapping(source = "id", target = "documentId")

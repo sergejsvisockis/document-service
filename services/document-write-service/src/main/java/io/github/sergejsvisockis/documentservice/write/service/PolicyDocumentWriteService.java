@@ -24,26 +24,26 @@ public class PolicyDocumentWriteService extends BaseDocumentWriteService<PolicyD
     }
 
     @Override
-    PolicyDocumentRequest validate(PolicyDocumentRequest request) {
+    public PolicyDocumentRequest validate(PolicyDocumentRequest request) {
         // TODO
         return request;
     }
 
     @Override
-    Resource generate(PolicyDocumentRequest request) {
+    public Resource generate(PolicyDocumentRequest request) {
         // TODO: Call towards the external system. Mock has to be created.
         return new ByteArrayResource(new byte[0]);
     }
 
     @Override
-    SavedDocumentMetadata sendToStorage(Resource request) {
+    public SavedDocumentMetadata sendToStorage(Resource request) {
         // TODO: An S3 client has to be created.
         return new SavedDocumentMetadata(UUID.randomUUID(), "policy", "policy.pdf");
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    SavedDocumentMetadata writeMetadata(SavedDocumentMetadata request) {
+    public SavedDocumentMetadata writeMetadata(SavedDocumentMetadata request) {
 
         DocumentMetadata map = documentMapper.map(request);
         documentWriteRepository.save(map);

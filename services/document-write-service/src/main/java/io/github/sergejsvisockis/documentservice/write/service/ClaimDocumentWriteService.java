@@ -24,26 +24,26 @@ public class ClaimDocumentWriteService extends BaseDocumentWriteService<ClaimDoc
     }
 
     @Override
-    ClaimDocumentRequest validate(ClaimDocumentRequest request) {
+    public ClaimDocumentRequest validate(ClaimDocumentRequest request) {
         // TODO
         return request;
     }
 
     @Override
-    Resource generate(ClaimDocumentRequest request) {
+    public Resource generate(ClaimDocumentRequest request) {
         // TODO: Call towards the external system. Mock has to be created.
         return new ByteArrayResource(new byte[0]);
     }
 
     @Override
-    SavedDocumentMetadata sendToStorage(Resource request) {
+    public SavedDocumentMetadata sendToStorage(Resource request) {
         // TODO: An S3 client has to be created.
         return new SavedDocumentMetadata(UUID.randomUUID(), "claim", "claim.pdf");
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    SavedDocumentMetadata writeMetadata(SavedDocumentMetadata request) {
+    public SavedDocumentMetadata writeMetadata(SavedDocumentMetadata request) {
 
         DocumentMetadata map = documentMapper.map(request);
         documentWriteRepository.save(map);
