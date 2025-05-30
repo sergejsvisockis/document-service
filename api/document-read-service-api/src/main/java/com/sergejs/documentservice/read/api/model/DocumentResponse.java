@@ -13,7 +13,7 @@ import java.util.Objects;
  * DocumentResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-30T11:30:52.670538+02:00[Europe/Stockholm]", comments = "Generator version: 7.13.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-30T14:25:27.316009+02:00[Europe/Stockholm]", comments = "Generator version: 7.13.0")
 public class DocumentResponse {
 
   @Valid

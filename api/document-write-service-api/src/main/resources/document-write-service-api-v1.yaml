@@ -147,3 +147,5 @@ components:
           format: uuid
         documentType:
           type: string
+        fileName:
+          type: string
