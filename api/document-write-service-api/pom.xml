@@ -49,7 +49,7 @@
         </dependency>
     </dependencies>
 
-    <!--<build>
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.openapitools</groupId>
@@ -84,6 +84,6 @@
                 </executions>
             </plugin>
         </plugins>
-    </build>-->
+    </build>
 
 </project>
