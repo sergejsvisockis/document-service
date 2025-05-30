@@ -42,8 +42,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <classifier>fat</classifier>
-                    <attach>false</attach>
                     <mainClass>io.github.sergejsvisockis.documentservice.read.DocumentReadApplication</mainClass>
                 </configuration>
             </plugin>
