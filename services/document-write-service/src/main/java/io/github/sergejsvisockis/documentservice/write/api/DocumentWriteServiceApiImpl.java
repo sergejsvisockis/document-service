@@ -1,17 +1,17 @@
-package io.github.sergejsvisockis.documentservice.write.controller;
+package io.github.sergejsvisockis.documentservice.write.api;
 
-import io.github.sergejsvisockis.documentservice.api.service.v1.DocumentWriteServiceApi;
-import io.github.sergejsvisockis.documentservice.api.service.v1.model.ClaimDocumentRequest;
-import io.github.sergejsvisockis.documentservice.api.service.v1.model.DocumentResponse;
-import io.github.sergejsvisockis.documentservice.api.service.v1.model.InvoiceDocumentRequest;
-import io.github.sergejsvisockis.documentservice.api.service.v1.model.PolicyDocumentRequest;
+import com.sergejs.documentservice.write.api.DocumentWriteServiceApi;
+import com.sergejs.documentservice.write.api.model.ClaimDocumentRequest;
+import com.sergejs.documentservice.write.api.model.DocumentResponse;
+import com.sergejs.documentservice.write.api.model.InvoiceDocumentRequest;
+import com.sergejs.documentservice.write.api.model.PolicyDocumentRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping
-public class DocumentWriteServiceController implements DocumentWriteServiceApi {
+@RequestMapping("/v1/document-service/write")
+public class DocumentWriteServiceApiImpl implements DocumentWriteServiceApi {
 
     @Override
     public ResponseEntity<DocumentResponse> writeClaimDocument(ClaimDocumentRequest claimDocumentRequest) {
@@ -27,5 +27,4 @@ public class DocumentWriteServiceController implements DocumentWriteServiceApi {
     public ResponseEntity<DocumentResponse> writePolicyDocument(PolicyDocumentRequest policyDocumentRequest) {
         return null;
     }
-
 }

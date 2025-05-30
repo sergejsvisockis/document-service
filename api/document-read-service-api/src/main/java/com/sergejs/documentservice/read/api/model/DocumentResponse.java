@@ -4,60 +4,47 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Generated;
 import jakarta.validation.Valid;
-import org.springframework.lang.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * DocumentResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-30T11:20:52.824015+02:00[Europe/Stockholm]", comments = "Generator version: 7.13.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-30T11:30:52.670538+02:00[Europe/Stockholm]", comments = "Generator version: 7.13.0")
 public class DocumentResponse {
 
-  private @Nullable UUID id;
+  @Valid
+  private List<@Valid DocumentMetadata> documents = new ArrayList<>();
 
-  private @Nullable String documentType;
+  public DocumentResponse documents(List<@Valid DocumentMetadata> documents) {
+    this.documents = documents;
+    return this;
+  }
 
-  public DocumentResponse id(UUID id) {
-    this.id = id;
+  public DocumentResponse addDocumentsItem(DocumentMetadata documentsItem) {
+    if (this.documents == null) {
+      this.documents = new ArrayList<>();
+    }
+    this.documents.add(documentsItem);
     return this;
   }
 
   /**
-   * Get id
-   * @return id
+   * Get documents
+   * @return documents
    */
   @Valid 
-  @Schema(name = "id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("id")
-  public UUID getId() {
-    return id;
+  @Schema(name = "documents", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("documents")
+  public List<@Valid DocumentMetadata> getDocuments() {
+    return documents;
   }
 
-  public void setId(UUID id) {
-    this.id = id;
-  }
-
-  public DocumentResponse documentType(String documentType) {
-    this.documentType = documentType;
-    return this;
-  }
-
-  /**
-   * Get documentType
-   * @return documentType
-   */
-  
-  @Schema(name = "documentType", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("documentType")
-  public String getDocumentType() {
-    return documentType;
-  }
-
-  public void setDocumentType(String documentType) {
-    this.documentType = documentType;
+  public void setDocuments(List<@Valid DocumentMetadata> documents) {
+    this.documents = documents;
   }
 
   @Override
@@ -69,21 +56,19 @@ public class DocumentResponse {
       return false;
     }
     DocumentResponse documentResponse = (DocumentResponse) o;
-    return Objects.equals(this.id, documentResponse.id) &&
-        Objects.equals(this.documentType, documentResponse.documentType);
+    return Objects.equals(this.documents, documentResponse.documents);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, documentType);
+    return Objects.hash(documents);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class DocumentResponse {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    documentType: ").append(toIndentedString(documentType)).append("\n");
+    sb.append("    documents: ").append(toIndentedString(documents)).append("\n");
     sb.append("}");
     return sb.toString();
   }

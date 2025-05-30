@@ -11,7 +11,7 @@ servers:
 
 paths:
   /documents/{documentId}:
-    post:
+    get:
       tags:
         - document-read-service
       summary: Get a metadata of the document by its ID
@@ -33,15 +33,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/DocumentResponse'
 
-  /documents/{documentType}:
-    post:
+  /documents:
+    get:
       tags:
         - document-read-service
       summary: Get a metadata of all the documents by specific type
       description: Shall return a metadata of all the possible documents by its type.
       operationId: readAllDocuments
       parameters:
-        - in: path
+        - in: query
           name: documentType
           schema:
             type: string
@@ -53,13 +53,19 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/DocumentResponse'
+                $ref: '#/components/schemas/DocumentResponse'
 
 components:
   schemas:
     DocumentResponse:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentMetadata'
+
+    DocumentMetadata:
       type: object
       properties:
         id:

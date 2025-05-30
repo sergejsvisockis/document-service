@@ -6,31 +6,41 @@
 package com.sergejs.documentservice.read.api;
 
 import com.sergejs.documentservice.read.api.model.DocumentResponse;
+import java.util.UUID;
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Generated;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
+import java.util.Optional;
+import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-30T11:20:52.824015+02:00[Europe/Stockholm]", comments = "Generator version: 7.13.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-30T11:39:17.701682+02:00[Europe/Stockholm]", comments = "Generator version: 7.13.0")
 @Validated
 @Tag(name = "document-read-service", description = "the document-read-service API")
 public interface DocumentReadServiceApi {
 
     /**
-     * POST /documents/{documentType} : Get a metadata of all the documents by specific type
+     * GET /documents : Get a metadata of all the documents by specific type
      * Shall return a metadata of all the possible documents by its type.
      *
      * @param documentType Searchable document types (required)
@@ -43,23 +53,23 @@ public interface DocumentReadServiceApi {
         tags = { "document-read-service" },
         responses = {
             @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = DocumentResponse.class)))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = DocumentResponse.class))
             })
         }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/documents/{documentType}",
+        method = RequestMethod.GET,
+        value = "/documents",
         produces = { "application/json" }
     )
     
-    ResponseEntity<List<DocumentResponse>> readAllDocuments(
-        @Parameter(name = "documentType", description = "Searchable document types", required = true, in = ParameterIn.PATH) @PathVariable("documentType") String documentType
+    ResponseEntity<DocumentResponse> readAllDocuments(
+        @NotNull @Parameter(name = "documentType", description = "Searchable document types", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "documentType", required = true) String documentType
     );
 
 
     /**
-     * POST /documents/{documentId} : Get a metadata of the document by its ID
+     * GET /documents/{documentId} : Get a metadata of the document by its ID
      * Shall return a metadata of a single document by its ID. Afterwards it is possible to search for that one in the S3.
      *
      * @param documentId Searchable document Id (required)
@@ -77,7 +87,7 @@ public interface DocumentReadServiceApi {
         }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
+        method = RequestMethod.GET,
         value = "/documents/{documentId}",
         produces = { "application/json" }
     )
