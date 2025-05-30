@@ -5,8 +5,12 @@ info:
   description: This is a document write service API specification.
 tags:
   - name: document-write-service
+
+servers:
+  - url: /document-service/v1
+
 paths:
-  /document-service/v1/policy-document-write:
+  /policy-document-write:
     post:
       tags:
         - document-write-service
@@ -25,7 +29,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DocumentResponse'
-  /document-service/v1/claim-document-write:
+  /claim-document-write:
     post:
       tags:
         - document-write-service
@@ -44,7 +48,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DocumentResponse'
-  /document-service/v1/invoice-document-write:
+  /invoice-document-write:
     post:
       tags:
         - document-write-service
