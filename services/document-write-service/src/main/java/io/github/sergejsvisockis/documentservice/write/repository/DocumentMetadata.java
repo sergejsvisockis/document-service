@@ -1,12 +1,16 @@
-package io.github.sergejsvisockis.documentservice.write.dynamodb.entity;
+package io.github.sergejsvisockis.documentservice.write.repository;
 
-import io.github.sergejsvisockis.documentservice.write.dynamodb.TableName;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 
+import static io.github.sergejsvisockis.documentservice.write.repository.DocumentMetadata.TABLE_NAME;
+
 @DynamoDbBean
-@TableName
+@TableName(name = TABLE_NAME)
 public class DocumentMetadata {
+
+    public static final String TABLE_NAME = "document_metadata";
 
     private String documentId;
     private String documentType;
@@ -21,6 +25,7 @@ public class DocumentMetadata {
         this.documentId = documentId;
     }
 
+    @DynamoDbAttribute("documentType")
     public String getDocumentType() {
         return documentType;
     }
@@ -29,6 +34,7 @@ public class DocumentMetadata {
         this.documentType = documentType;
     }
 
+    @DynamoDbAttribute("fileName")
     public String getFileName() {
         return fileName;
     }

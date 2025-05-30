@@ -1,8 +1,8 @@
 package io.github.sergejsvisockis.documentservice.write.service;
 
 import com.sergejs.documentservice.write.api.model.ClaimDocumentRequest;
-import io.awspring.cloud.dynamodb.DynamoDbTemplate;
-import io.github.sergejsvisockis.documentservice.write.dynamodb.entity.DocumentMetadata;
+import io.github.sergejsvisockis.documentservice.write.repository.DocumentMetadata;
+import io.github.sergejsvisockis.documentservice.write.repository.DocumentRepository;
 import io.github.sergejsvisockis.documentservice.write.service.dto.SavedDocumentMetadata;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -13,12 +13,11 @@ import java.util.UUID;
 @Service
 public class ClaimDocumentWriteService extends BaseDocumentWriteService<ClaimDocumentRequest> {
 
-    private final DynamoDbTemplate dynamoDbTemplate;
+    private final DocumentRepository documentRepository;
     private final DocumentMapper documentMapper;
 
-    public ClaimDocumentWriteService(DynamoDbTemplate dynamoDbTemplate,
-                                     DocumentMapper documentMapper) {
-        this.dynamoDbTemplate = dynamoDbTemplate;
+    public ClaimDocumentWriteService(DocumentRepository documentRepository, DocumentMapper documentMapper) {
+        this.documentRepository = documentRepository;
         this.documentMapper = documentMapper;
     }
 
@@ -44,7 +43,7 @@ public class ClaimDocumentWriteService extends BaseDocumentWriteService<ClaimDoc
     public SavedDocumentMetadata writeMetadata(SavedDocumentMetadata request) {
 
         DocumentMetadata map = documentMapper.map(request);
-        dynamoDbTemplate.save(map);
+        documentRepository.save(map);
 
         return request;
     }
