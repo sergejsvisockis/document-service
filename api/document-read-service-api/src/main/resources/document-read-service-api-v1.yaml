@@ -14,8 +14,8 @@ paths:
     get:
       tags:
         - document-read-service
-      summary: Get a metadata of the document by its ID
-      description: Shall return a metadata of a single document by its ID. Afterwards it is possible to search for that one in the S3.
+      summary: Get a document file by its ID
+      description: Shall download form the storage and return an actual PDF.
       operationId: readSingleDocument
       parameters:
         - in: path
@@ -29,9 +29,9 @@ paths:
         '200':
           description: Successful operation
           content:
-            application/json:
+            application/pdf:
               schema:
-                $ref: '#/components/schemas/DocumentResponse'
+                format: binary
 
   /documents:
     get:

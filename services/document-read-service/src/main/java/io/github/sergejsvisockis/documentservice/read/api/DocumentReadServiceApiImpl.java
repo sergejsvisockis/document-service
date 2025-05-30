@@ -18,7 +18,7 @@ public class DocumentReadServiceApiImpl implements DocumentReadServiceApi {
     }
 
     @Override
-    public ResponseEntity<DocumentResponse> readSingleDocument(UUID documentId) {
+    public ResponseEntity<Object> readSingleDocument(UUID documentId) {
         return null;
     }
 }
