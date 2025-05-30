@@ -7,7 +7,7 @@ import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.ResourceNotFoundException;
 
-import static io.github.sergejsvisockis.documentservice.write.repository.DocumentMetadata.TABLE_NAME;
+import static io.github.sergejsvisockis.documentservice.write.repository.Document.TABLE_NAME;
 
 @Repository
 public class DocumentRepository {
@@ -23,13 +23,13 @@ public class DocumentRepository {
             dynamoDbClient.describeTable(b -> b.tableName(TABLE_NAME));
         } catch (ResourceNotFoundException e) {
             enhancedClient.table(TABLE_NAME,
-                            TableSchema.fromClass(DocumentMetadata.class))
+                            TableSchema.fromClass(Document.class))
                     .createTable();
         }
     }
 
-    public DocumentMetadata save(DocumentMetadata documentMetadata) {
-        return dynamoDbTemplate.save(documentMetadata);
+    public Document save(Document document) {
+        return dynamoDbTemplate.save(document);
     }
 
 }

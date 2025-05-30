@@ -4,13 +4,13 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttri
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 
-import static io.github.sergejsvisockis.documentservice.write.repository.DocumentMetadata.TABLE_NAME;
+import static io.github.sergejsvisockis.documentservice.write.repository.Document.TABLE_NAME;
 
 @DynamoDbBean
 @TableName(name = TABLE_NAME)
-public class DocumentMetadata {
+public class Document {
 
-    public static final String TABLE_NAME = "document_metadata";
+    public static final String TABLE_NAME = "document";
 
     private String documentId;
     private String documentType;

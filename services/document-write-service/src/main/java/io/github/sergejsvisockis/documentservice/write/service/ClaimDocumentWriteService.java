@@ -1,7 +1,7 @@
 package io.github.sergejsvisockis.documentservice.write.service;
 
 import com.sergejs.documentservice.write.api.model.ClaimDocumentRequest;
-import io.github.sergejsvisockis.documentservice.write.repository.DocumentMetadata;
+import io.github.sergejsvisockis.documentservice.write.repository.Document;
 import io.github.sergejsvisockis.documentservice.write.repository.DocumentRepository;
 import io.github.sergejsvisockis.documentservice.write.service.dto.SavedDocumentMetadata;
 import org.springframework.core.io.ByteArrayResource;
@@ -42,7 +42,7 @@ public class ClaimDocumentWriteService extends BaseDocumentWriteService<ClaimDoc
     @Override
     public SavedDocumentMetadata writeMetadata(SavedDocumentMetadata request) {
 
-        DocumentMetadata map = documentMapper.map(request);
+        Document map = documentMapper.map(request);
         documentRepository.save(map);
 
         return request;
