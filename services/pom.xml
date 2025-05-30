@@ -14,9 +14,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>document-generation-mock</module>
         <module>document-read-service</module>
         <module>document-write-service</module>
+        <module>document-generation-service</module>
     </modules>
 
 </project>
