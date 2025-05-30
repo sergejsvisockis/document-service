@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+    <changeSet id="1" author="svisockis">
+        <createTable tableName="document_metadata">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="document_id" type="uuid"/>
+            <column name="document_type" type="varchar(10)"/>
+        </createTable>
+        <sql><![CDATA[
+            ALTER TABLE document_metadata
+                ADD CONSTRAINT doc_type_values CHECK ( document_type IN ('policy', 'claim', 'invoice'))
+            ]]>
+            </sql>
+    </changeSet>
+
+    <changeSet id="2" author="svisockis">
+        <addColumn tableName="document_metadata">
+            <column name="file_name" type="varchar(100)"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>
