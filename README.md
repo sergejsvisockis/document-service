@@ -3,7 +3,7 @@
 Let's imagine that the following service is a subset of the SOA platform that serves some business purpose let it be
 insurance platform that generates some related documents.
 
-Functional requirements:
+## Functional requirements
 
 * The following service has to generate these PDF documents:
     * Policy
@@ -42,25 +42,6 @@ Functional requirements:
         * Phone number
         * Total Price
 
-Non-functional requirements:
+## Non-functional requirements
 
-* Due to the overall system and its underlying UI constraints that one queries documents more frequently than
-  makes these.
-* CQRS pattern has to be leveraged to separate reads from writes and allow concurrent executions
-  as well as independent scalability.
-* An API first approach has to be used having a separate Open API schema for each endpoint
-* Document write service:
-    * Save the document metadata into the write master database
-    * Invoke an external document generation engine and generate PDF documents
-    * Place the aforementioned documents into the AWS S3 bucket
-    * The UI will create only one type of document at the same time therefore each document has have a separate endpoint
-    * Each endpoint is invoked having a different load and workflow from the UI side
-* Document read service:
-    * Retrieve PDF from the AWS S3 bucket and return upon invocation of the underlying endpoint with
-      the `Content-type: application/pdf` header (assuming the UI has to allow capability to download the PDF from the
-      S3 bucket)
-    * Have a capability to retrieve only a metadata of the underlying document (separate endpoint) by its ID - assuming
-      concurrent UI which has to popup metadata for the underlying table.
-    * Will read document metadata from the same database (no read replica is needed)
-* Both applications `read` and `write` have to be Docker containerised and deployed as K8S PODs into the AWS
-  EKS cluster
+TODO
