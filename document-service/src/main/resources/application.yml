@@ -11,5 +11,9 @@ spring:
         region: ${REGION}
         endpoint: ${DYNAMODB_ENDPOINT}
       s3:
-        endpoint: ${S3_ENDPOINT}
         region: ${REGION}
+        endpoint: ${S3_ENDPOINT}
+      sns:
+        enabled: true
+        region: ${REGION}
+        endpoint: ${SNS_ENDPOINT}
