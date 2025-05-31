@@ -2,10 +2,9 @@ package io.github.sergejsvisockis.documentservice.service;
 
 import io.github.sergejsvisockis.documentservice.repository.Document;
 import io.github.sergejsvisockis.documentservice.repository.DocumentRepository;
+import io.github.sergejsvisockis.documentservice.storage.DocumentStorageManager;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.core.ResponseInputStream;
-import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 
 import java.util.List;
@@ -13,11 +12,12 @@ import java.util.List;
 @Service
 public class DocumentReadService {
 
-    private final S3Client s3Client;
+    private final DocumentStorageManager<ResponseInputStream<GetObjectResponse>> storageManager;
     private final DocumentRepository documentRepository;
 
-    public DocumentReadService(S3Client s3Client, DocumentRepository documentRepository) {
-        this.s3Client = s3Client;
+    public DocumentReadService(DocumentStorageManager<ResponseInputStream<GetObjectResponse>> storageManager,
+                               DocumentRepository documentRepository) {
+        this.storageManager = storageManager;
         this.documentRepository = documentRepository;
     }
 
@@ -26,8 +26,6 @@ public class DocumentReadService {
     }
 
     public ResponseInputStream<GetObjectResponse> getDocument(String fileName) {
-        return s3Client.getObject(GetObjectRequest.builder().bucket("insurtechstorage")
-                .key(fileName)
-                .build());
+        return storageManager.getDocument(fileName);
     }
 }
