@@ -16,7 +16,7 @@ public class Document {
     public static final String TABLE_NAME = "documentAsBytes";
 
     private String documentId;
-    private String documentType;
+    private String entityType;
     private String fileName;
 
     @DynamoDbPartitionKey
@@ -25,8 +25,8 @@ public class Document {
     }
 
     @DynamoDbAttribute("entityType")
-    public String getDocumentType() {
-        return documentType;
+    public String getEntityType() {
+        return entityType;
     }
 
     @DynamoDbAttribute("fileName")

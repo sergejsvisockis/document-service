@@ -41,7 +41,7 @@ paths:
       operationId: getDocumentMetadata
       parameters:
         - in: query
-          name: documentType
+          name: entityType
           schema:
             type: string
           required: true
