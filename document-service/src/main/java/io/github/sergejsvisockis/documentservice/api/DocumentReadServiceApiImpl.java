@@ -37,6 +37,6 @@ public class DocumentReadServiceApiImpl implements DocumentReadServiceApi {
 
     @Override
     public ResponseEntity<Object> getDocument(UUID documentId) {
-        return null;
+        return ResponseEntity.ok(documentReadService.getDocument(documentId));
     }
 }

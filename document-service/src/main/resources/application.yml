@@ -1,11 +1,2 @@
 server:
   port: 8080
-
-spring:
-  cloud:
-    aws:
-      dynamodb:
-        region: local
-      credentials:
-        access-key: svisockis
-        secret-key: svisockis
