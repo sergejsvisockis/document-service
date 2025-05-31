@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import software.amazon.awssdk.services.sns.SnsClient;
 import software.amazon.awssdk.services.sns.model.CreateTopicRequest;
 import software.amazon.awssdk.services.sns.model.PublishRequest;
+import software.amazon.awssdk.services.sns.model.Topic;
 
 @Component
 public class DocumentSNSPublisher {
@@ -14,7 +15,18 @@ public class DocumentSNSPublisher {
         this.snsClient = snsClient;
     }
 
-    public String createTopic(String topicName) {
+    public String createTopicIfNotExist(String topicName) {
+        return snsClient.listTopics()
+                .topics()
+                .stream()
+                .map(Topic::topicArn)
+                .filter(s -> s.endsWith(":" + topicName))
+                .findFirst()
+                .orElse(createTopic(topicName));
+
+    }
+
+    private String createTopic(String topicName) {
         CreateTopicRequest request = CreateTopicRequest.builder()
                 .name(topicName)
                 .build();

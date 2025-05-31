@@ -1,9 +1,8 @@
 package io.github.sergejsvisockis.documentservice.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.sergejsvisockis.documentservice.service.dto.SentDocumentMetadata;
 import io.github.sergejsvisockis.documentservice.sns.DocumentSNSPublisher;
+import io.github.sergejsvisockis.documentservice.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
@@ -28,13 +27,8 @@ public abstract class BaseDocumentWriteService<T, G> {
 
         SentDocumentMetadata sentDocumentMetadata = sendToStorage(document);
 
-        String topicArn = snsPublisher.createTopic("document-saved");
-        try {
-            snsPublisher.publish(topicArn, new ObjectMapper().writeValueAsString(sentDocumentMetadata));
-        } catch (JsonProcessingException e) {
-            throw new IllegalStateException("Failed to serialise message " +
-                                            "and consequently to send to the topic=" + topicArn, e);
-        }
+        String topicArn = snsPublisher.createTopicIfNotExist("document-saved");
+        snsPublisher.publish(topicArn, JsonUtil.toJson(sentDocumentMetadata));
 
         return save(sentDocumentMetadata);
     }

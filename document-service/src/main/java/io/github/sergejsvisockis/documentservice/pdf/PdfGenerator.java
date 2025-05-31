@@ -1,5 +1,6 @@
 package io.github.sergejsvisockis.documentservice.pdf;
 
+import io.github.sergejsvisockis.documentservice.utils.JsonUtil;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -35,11 +36,9 @@ public class PdfGenerator {
             contentStream = new PDPageContentStream(document, page);
             contentStream.beginText();
             contentStream.setFont(new PDType1Font(FontName.COURIER), 12);
-            contentStream.showText(request.toString().replace("\n", ""));
+            contentStream.showText(JsonUtil.toJson(request));
             contentStream.endText();
             contentStream.close();
-
-            document.save(documentName);
         } catch (Exception e) {
             document.close();
             throw new IllegalStateException("Failed to write page content", e);
