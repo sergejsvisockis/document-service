@@ -5,6 +5,7 @@ import com.sergejs.documentservice.api.model.DocumentReadResponse;
 import com.sergejs.documentservice.api.model.DocumentResponse;
 import io.github.sergejsvisockis.documentservice.repository.Document;
 import io.github.sergejsvisockis.documentservice.service.DocumentReadService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -19,16 +20,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/document-service/read")
+@RequiredArgsConstructor
 public class DocumentReadServiceApiImpl implements DocumentReadServiceApi {
 
     private final DocumentReadService documentReadService;
     private final DocumentResponseMapper documentResponseMapper;
-
-    public DocumentReadServiceApiImpl(DocumentReadService documentReadService,
-                                      DocumentResponseMapper documentResponseMapper) {
-        this.documentReadService = documentReadService;
-        this.documentResponseMapper = documentResponseMapper;
-    }
 
     @Override
     public ResponseEntity<DocumentReadResponse> getDocumentMetadata(String documentType) {

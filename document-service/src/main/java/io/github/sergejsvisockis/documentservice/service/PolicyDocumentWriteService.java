@@ -6,6 +6,7 @@ import io.github.sergejsvisockis.documentservice.pdf.PdfGenerator;
 import io.github.sergejsvisockis.documentservice.repository.Document;
 import io.github.sergejsvisockis.documentservice.repository.DocumentRepository;
 import io.github.sergejsvisockis.documentservice.service.dto.SentDocumentMetadata;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.core.sync.RequestBody;
@@ -17,22 +18,13 @@ import java.io.IOException;
 import java.util.UUID;
 
 @Service
-public class PolicyDocumentWriteService extends BaseDocumentWriteService<PolicyDocumentRequest, GeneratedPdfHolder> {
+@RequiredArgsConstructor
+public class PolicyDocumentWriteService extends BaseDocumentWriteService<PolicyDocumentRequest> {
 
     private final PdfGenerator pdfGenerator;
     private final DocumentRepository documentRepository;
     private final DocumentMapper documentMapper;
     private final S3Client s3Client;
-
-    public PolicyDocumentWriteService(PdfGenerator pdfGenerator,
-                                      DocumentRepository documentRepository,
-                                      DocumentMapper documentMapper,
-                                      S3Client s3Client) {
-        this.pdfGenerator = pdfGenerator;
-        this.documentRepository = documentRepository;
-        this.documentMapper = documentMapper;
-        this.s3Client = s3Client;
-    }
 
     @Override
     public PolicyDocumentRequest validate(PolicyDocumentRequest request) {
