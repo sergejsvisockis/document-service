@@ -13,7 +13,7 @@ import static io.github.sergejsvisockis.documentservice.repository.Document.TABL
 @TableName(name = TABLE_NAME)
 public class Document {
 
-    public static final String TABLE_NAME = "documentAsBytes";
+    public static final String TABLE_NAME = "document";
 
     private String documentId;
     private String entityType;
