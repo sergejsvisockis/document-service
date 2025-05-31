@@ -7,7 +7,7 @@ package io.github.sergejsvisockis.documentservice.storage;
  *
  * @param <T> the return type of provider
  */
-public interface DocumentStorageManager<T> {
+public interface DocumentStorageProvider<T> {
 
     /**
      * Get document by the filename.

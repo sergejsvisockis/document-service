@@ -7,13 +7,13 @@ import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 
 @Component
-public class S3StorageManager implements DocumentStorageManager<ResponseInputStream<GetObjectResponse>> {
+public class S3StorageProvider implements DocumentStorageProvider<ResponseInputStream<GetObjectResponse>> {
 
     private static final String BUCKET = "insurtechstorage";
 
     private final S3Client s3Client;
 
-    public S3StorageManager(S3Client s3Client) {
+    public S3StorageProvider(S3Client s3Client) {
         this.s3Client = s3Client;
     }
 
