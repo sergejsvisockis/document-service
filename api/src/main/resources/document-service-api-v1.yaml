@@ -195,7 +195,7 @@ components:
         id:
           type: string
           format: uuid
-        documentType:
+        entityType:
           type: string
         fileName:
           type: string
