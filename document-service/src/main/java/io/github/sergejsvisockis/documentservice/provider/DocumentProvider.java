@@ -1,13 +1,13 @@
-package io.github.sergejsvisockis.documentservice.storage;
+package io.github.sergejsvisockis.documentservice.provider;
 
 /**
- * This is the base document storage manager which is supposed to provide a single contract
+ * This is the base document storage provider which is supposed to provide a single contract
  * for all the subsequent implementations.
  * For example there might be an AWS S3 implementation, SFTP implementation, some 3rd party REST webservice.
  *
  * @param <T> the return type of provider
  */
-public interface DocumentStorageProvider<T> {
+public interface DocumentProvider<T> {
 
     /**
      * Get document by the filename.
