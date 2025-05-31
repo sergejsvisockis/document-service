@@ -10,11 +10,9 @@ import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
-import java.io.ByteArrayOutputStream;
-
 @Component
 @RequiredArgsConstructor
-public class S3DocumentProvider implements DocumentProvider<ResponseInputStream<GetObjectResponse>, ByteArrayOutputStream> {
+public class S3DocumentProvider implements DocumentProvider<ResponseInputStream<GetObjectResponse>, byte[]> {
 
     private static final String BUCKET = "insurtechstorage";
 
@@ -29,14 +27,14 @@ public class S3DocumentProvider implements DocumentProvider<ResponseInputStream<
     }
 
     @Override
-    public void store(ByteArrayOutputStream document, String fileName) {
+    public void store(byte[] document, String fileName) {
         s3Client.putObject(
                 PutObjectRequest.builder()
                         .bucket(BUCKET)
                         .key(fileName)
                         .contentType(MediaType.APPLICATION_PDF.toString())
                         .build(),
-                RequestBody.fromBytes(document.toByteArray())
+                RequestBody.fromBytes(document)
         );
     }
 }

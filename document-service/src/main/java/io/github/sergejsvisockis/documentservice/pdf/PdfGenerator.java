@@ -1,5 +1,7 @@
 package io.github.sergejsvisockis.documentservice.pdf;
 
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -7,11 +9,21 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts.FontName;
 import org.springframework.stereotype.Component;
 
+import java.io.ByteArrayOutputStream;
 import java.util.UUID;
 
+@Slf4j
 @Component
 public class PdfGenerator {
 
+    /**
+     * NOTE: that this implementation is very simplistic and is not supposed to be production-ready.
+     *
+     * @param request PDF documentAsBytes content.
+     * @param <T>     the type out of which to generate.
+     * @return generated PDF metadata holder.
+     */
+    @SneakyThrows
     public <T> GeneratedPdfHolder generatePdf(T request) {
         PDDocument document = new PDDocument();
         PDPage page = new PDPage();
@@ -28,12 +40,17 @@ public class PdfGenerator {
             contentStream.close();
 
             document.save(documentName);
-            document.close();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            document.close();
+            throw new IllegalStateException("Failed to write page content", e);
         }
 
-        return new GeneratedPdfHolder(documentName, document);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        document.save(out);
+
+        document.close();
+
+        return new GeneratedPdfHolder(documentName, out.toByteArray());
     }
 
 }

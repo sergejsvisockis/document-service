@@ -37,7 +37,7 @@ public class DocumentRepository {
     public List<Document> findAllByType(String type) {
         ScanEnhancedRequest request = ScanEnhancedRequest.builder()
                 .filterExpression(Expression.builder()
-                        .expression("documentType = :type")
+                        .expression("entityType = :type")
                         .expressionValues(Map.of(":type", AttributeValue.fromS(type)))
                         .build())
                 .build();

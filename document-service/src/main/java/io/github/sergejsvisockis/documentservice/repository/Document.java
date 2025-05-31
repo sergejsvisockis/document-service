@@ -13,7 +13,7 @@ import static io.github.sergejsvisockis.documentservice.repository.Document.TABL
 @TableName(name = TABLE_NAME)
 public class Document {
 
-    public static final String TABLE_NAME = "document";
+    public static final String TABLE_NAME = "documentAsBytes";
 
     private String documentId;
     private String documentType;
@@ -24,7 +24,7 @@ public class Document {
         return documentId;
     }
 
-    @DynamoDbAttribute("documentType")
+    @DynamoDbAttribute("entityType")
     public String getDocumentType() {
         return documentType;
     }

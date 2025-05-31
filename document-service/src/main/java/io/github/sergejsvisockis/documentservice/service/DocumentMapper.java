@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 public interface DocumentMapper {
 
     @Mapping(source = "id", target = "documentId")
-    @Mapping(source = "documentType", target = "documentType")
+    @Mapping(source = "entityType", target = "entityType")
     @Mapping(source = "fileName", target = "fileName")
     Document map(SentDocumentMetadata metadata);
 }
