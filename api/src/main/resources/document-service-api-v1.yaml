@@ -1,0 +1,201 @@
+openapi: 3.1.1
+info:
+  title: Document Service API
+  version: 1.0.0
+  description: This is a document service API specification.
+tags:
+  - name: document-service
+
+servers:
+  - url: /document-service/v1
+
+paths:
+  /documents/{documentId}:
+    get:
+      tags:
+        - document-read-service
+      summary: Get a document file by its ID
+      description: Shall download form the storage and return an actual PDF.
+      operationId: getDocument
+      parameters:
+        - in: path
+          name: documentId
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Searchable document Id
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/pdf:
+              schema:
+                format: binary
+  /documents:
+    get:
+      tags:
+        - document-read-service
+      summary: Get a metadata of all the documents by specific type
+      description: Shall return a metadata of all the possible documents by its type.
+      operationId: getDocumentMetadata
+      parameters:
+        - in: query
+          name: documentType
+          schema:
+            type: string
+          required: true
+          description: Searchable document types
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentReadResponse'
+  /policy:
+    post:
+      tags:
+        - document-write-service
+      summary: Create policy document
+      description: Write the policy metadata into the database and trigger PDF generation
+      operationId: writePolicyDocument
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyDocumentRequest'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentResponse'
+  /claim:
+    post:
+      tags:
+        - document-write-service
+      summary: Create claim document
+      description: Write claim metadata into the database and trigger PDF generation
+      operationId: writeClaimDocument
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClaimDocumentRequest'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentResponse'
+  /invoice:
+    post:
+      tags:
+        - document-write-service
+      summary: Create invoice document
+      description: Write an invoice document metadata into the database and trigger PDF generation
+      operationId: writeInvoiceDocument
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceDocumentRequest'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentResponse'
+
+components:
+  schemas:
+    PolicyDocumentRequest:
+      type: object
+      properties:
+        insured:
+          type: object
+          properties:
+            firstName:
+              type: string
+            lastName:
+              type: string
+        owner:
+          type: object
+          properties:
+            firstName:
+              type: string
+            lastName:
+              type: string
+        policyNumber:
+          type: string
+        phoneNumber:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        relationshipToInsured:
+          type: string
+        premium:
+          type: number
+        lob:
+          type: string
+    ClaimDocumentRequest:
+      type: object
+      properties:
+        claimNumber:
+          type: string
+        policyNumber:
+          type: string
+        city:
+          type: string
+        address:
+          type: string
+        placeOfIncident:
+          type: string
+        shortDescription:
+          type: string
+    InvoiceDocumentRequest:
+      type: object
+      properties:
+        policyNumber:
+          type: string
+        insured:
+          type: object
+          properties:
+            firstName:
+              type: string
+            lastName:
+              type: string
+        owner:
+          type: object
+          properties:
+            firstName:
+              type: string
+            lastName:
+              type: string
+        phoneNumber:
+          type: string
+        totalPrice:
+          type: number
+    DocumentReadResponse:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentResponse'
+    DocumentResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        documentType:
+          type: string
+        fileName:
+          type: string
