@@ -51,5 +51,3 @@ atlassian-ide-plugin.xml
 .vscode/
 
 cached-antora-playbook.yml
-
-document-service/src/main/resources/application-local.yml
