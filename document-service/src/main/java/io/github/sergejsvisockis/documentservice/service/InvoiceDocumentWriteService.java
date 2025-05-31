@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class InvoiceDocumentWriteService extends BaseDocumentWriteService<InvoiceDocumentRequest> {
+public class InvoiceDocumentWriteService extends BaseDocumentWriteService<InvoiceDocumentRequest, Resource> {
 
     private final DocumentRepository documentRepository;
     private final DocumentMapper documentMapper;
