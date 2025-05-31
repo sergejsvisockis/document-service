@@ -36,6 +36,7 @@ public class PdfGenerator {
             contentStream = new PDPageContentStream(document, page);
             contentStream.beginText();
             contentStream.setFont(new PDType1Font(FontName.COURIER), 12);
+            contentStream.newLineAtOffset(0, 500);
             contentStream.showText(JsonUtil.toJson(request));
             contentStream.endText();
             contentStream.close();
