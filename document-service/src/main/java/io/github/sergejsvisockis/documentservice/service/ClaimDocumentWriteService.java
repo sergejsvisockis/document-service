@@ -4,6 +4,7 @@ import com.sergejs.documentservice.api.model.ClaimDocumentRequest;
 import io.github.sergejsvisockis.documentservice.repository.Document;
 import io.github.sergejsvisockis.documentservice.repository.DocumentRepository;
 import io.github.sergejsvisockis.documentservice.service.dto.SentDocumentMetadata;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -11,15 +12,11 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class ClaimDocumentWriteService extends BaseDocumentWriteService<ClaimDocumentRequest> {
 
     private final DocumentRepository documentRepository;
     private final DocumentMapper documentMapper;
-
-    public ClaimDocumentWriteService(DocumentRepository documentRepository, DocumentMapper documentMapper) {
-        this.documentRepository = documentRepository;
-        this.documentMapper = documentMapper;
-    }
 
     @Override
     public ClaimDocumentRequest validate(ClaimDocumentRequest request) {

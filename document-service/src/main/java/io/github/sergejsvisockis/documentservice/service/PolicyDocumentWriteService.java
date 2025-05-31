@@ -4,6 +4,7 @@ import com.sergejs.documentservice.api.model.PolicyDocumentRequest;
 import io.github.sergejsvisockis.documentservice.repository.Document;
 import io.github.sergejsvisockis.documentservice.repository.DocumentRepository;
 import io.github.sergejsvisockis.documentservice.service.dto.SentDocumentMetadata;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -11,16 +12,11 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class PolicyDocumentWriteService extends BaseDocumentWriteService<PolicyDocumentRequest> {
 
     private final DocumentRepository documentRepository;
     private final DocumentMapper documentMapper;
-
-    public PolicyDocumentWriteService(DocumentRepository documentRepository,
-                                      DocumentMapper documentMapper) {
-        this.documentRepository = documentRepository;
-        this.documentMapper = documentMapper;
-    }
 
     @Override
     public PolicyDocumentRequest validate(PolicyDocumentRequest request) {
