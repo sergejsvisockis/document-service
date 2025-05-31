@@ -15,7 +15,7 @@ public class DocumentReadService {
         this.documentRepository = documentRepository;
     }
 
-    public List<Document> findAllByType(String type) {
+    public List<Document> getDocumentMetadata(String type) {
         return documentRepository.findAllByType(type);
     }
 }

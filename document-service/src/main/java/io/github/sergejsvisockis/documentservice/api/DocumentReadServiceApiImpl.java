@@ -27,7 +27,7 @@ public class DocumentReadServiceApiImpl implements DocumentReadServiceApi {
 
     @Override
     public ResponseEntity<DocumentReadResponse> getDocumentMetadata(String documentType) {
-        List<Document> allDocuments = documentReadService.findAllByType(documentType);
+        List<Document> allDocuments = documentReadService.getDocumentMetadata(documentType);
 
         List<DocumentResponse> documents = documentResponseMapper.mapDocumentsToDocumentResponses(allDocuments);
 
