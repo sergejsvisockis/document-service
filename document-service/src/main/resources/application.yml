@@ -9,7 +9,7 @@ spring:
         secret-key: ${SECRET_KEY}
       dynamodb:
         region: ${REGION}
-        endpoint: ${DYNAMO_ENDPOINT}
+        endpoint: ${DYNAMODB_ENDPOINT}
       s3:
         endpoint: ${S3_ENDPOINT}
         region: ${REGION}
