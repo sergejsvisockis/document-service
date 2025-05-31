@@ -44,4 +44,11 @@ insurance platform that generates some related documents.
 
 ## Non-functional requirements
 
-TODO
+* An AWS Cloud and its services will be used
+* An app has to handle around 2-6 requests per second for both read and write
+* An event of every operation shall be accessible in a messaging broker (AWS SNS)
+* Document format - PDF - assume that in the future there might be different document formats as well
+* Documents have to be stored in the AWS S3 bucket - assume that potentially in the future some of the entities might be
+  stored in SFTP for example
+* Notification (an event) on each operation (validate, generate, sendToStorage and save) have to be sent into the SNS.
+* Document metadata will be store in a key-value NoSQL datastore AWS DynamoDB
