@@ -15,12 +15,17 @@ public abstract class BaseDocumentWriteService<T> {
 
     public SentDocumentMetadata process(T request) {
         T validatedRequest = validate(request);
+        // TODO: Send SNS message here
 
         Resource pdfDocument = generate(validatedRequest);
+        // TODO: Send SNS message here
 
         SentDocumentMetadata sentDocumentMetadata = sendToStorage(pdfDocument);
+        // TODO: Send SNS message here
 
-        return save(sentDocumentMetadata);
+        SentDocumentMetadata savedDocument = save(sentDocumentMetadata);
+        // TODO: Send SNS message here
+        return savedDocument;
     }
 
     /**
