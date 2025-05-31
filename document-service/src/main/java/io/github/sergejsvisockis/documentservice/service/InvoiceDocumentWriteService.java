@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class InvoiceDocumentWriteService extends BaseDocumentWriteService<InvoiceDocumentRequest> {
+public class InvoiceDocumentWriteService extends BaseDocumentWriteService<InvoiceDocumentRequest, Resource> {
 
     private final DocumentRepository documentRepository;
     private final DocumentMapper documentMapper;

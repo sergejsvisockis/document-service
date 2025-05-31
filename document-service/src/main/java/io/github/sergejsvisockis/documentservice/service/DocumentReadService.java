@@ -1,6 +1,6 @@
 package io.github.sergejsvisockis.documentservice.service;
 
-import io.github.sergejsvisockis.documentservice.provider.DocumentProvider;
+import io.github.sergejsvisockis.documentservice.provider.S3DocumentProvider;
 import io.github.sergejsvisockis.documentservice.repository.Document;
 import io.github.sergejsvisockis.documentservice.repository.DocumentRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DocumentReadService {
 
-    private final DocumentProvider<ResponseInputStream<GetObjectResponse>> storageProvider;
+    private final S3DocumentProvider documentProvider;
     private final DocumentRepository documentRepository;
 
     public List<Document> getDocumentMetadata(String type) {
@@ -22,6 +22,6 @@ public class DocumentReadService {
     }
 
     public ResponseInputStream<GetObjectResponse> getDocument(String fileName) {
-        return storageProvider.getDocument(fileName);
+        return documentProvider.getDocument(fileName);
     }
 }

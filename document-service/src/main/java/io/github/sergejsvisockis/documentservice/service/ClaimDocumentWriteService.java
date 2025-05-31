@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class ClaimDocumentWriteService extends BaseDocumentWriteService<ClaimDocumentRequest> {
+public class ClaimDocumentWriteService extends BaseDocumentWriteService<ClaimDocumentRequest, Resource> {
 
     private final DocumentRepository documentRepository;
     private final DocumentMapper documentMapper;

@@ -6,8 +6,9 @@ package io.github.sergejsvisockis.documentservice.provider;
  * For example there might be an AWS S3 implementation, SFTP implementation, some 3rd party REST webservice.
  *
  * @param <T> the return type of provider
+ * @param <P> the document to be saved.
  */
-public interface DocumentProvider<T> {
+public interface DocumentProvider<T, P> {
 
     /**
      * Get document by the filename.
@@ -17,5 +18,11 @@ public interface DocumentProvider<T> {
      */
     T getDocument(String fileName);
 
-    // TODO: USe an S3 as the base
+    /**
+     * Store the document on the storage.
+     *
+     * @param document document content.
+     * @param fileName the resulting file name.
+     */
+    void store(P document, String fileName);
 }
