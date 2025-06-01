@@ -10,7 +10,7 @@ servers:
   - url: /document-service/v1
 
 paths:
-  /documents/{documentId}:
+  /api/v1/read/documents/{documentId}:
     get:
       tags:
         - document-read-service
@@ -32,11 +32,11 @@ paths:
             application/pdf:
               schema:
                 format: binary
-  /documents:
+  /api/v1/read/documents:
     get:
       tags:
         - document-read-service
-      summary: Get a metadata of all the documents by specific type
+      summary: Get a metadata of all the documents by specific type∞
       description: Shall return a metadata of all the possible documents by its type.
       operationId: getDocumentMetadata
       parameters:
@@ -53,7 +53,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DocumentReadResponse'
-  /policy:
+  /api/v1/write/policy-document:
     post:
       tags:
         - document-write-service
@@ -72,7 +72,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DocumentResponse'
-  /claim:
+  /api/v1/write/claim-document:
     post:
       tags:
         - document-write-service
@@ -91,7 +91,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DocumentResponse'
-  /invoice:
+  /api/v1/write/invoice-document:
     post:
       tags:
         - document-write-service

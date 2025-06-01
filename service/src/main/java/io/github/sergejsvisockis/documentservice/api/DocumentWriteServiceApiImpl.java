@@ -10,11 +10,9 @@ import io.github.sergejsvisockis.documentservice.service.PolicyDocumentWriteServ
 import io.github.sergejsvisockis.documentservice.service.dto.SentDocumentMetadata;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/document-service/write")
 @RequiredArgsConstructor
 public class DocumentWriteServiceApiImpl implements DocumentWriteServiceApi {
 
