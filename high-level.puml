@@ -4,11 +4,11 @@
 autonumber
 
 actor user
-actor web_ui
+boundary web_ui
 control document_service
 control aws_S3
 queue aws_SNS
-control aws_DynamoDB
+database aws_DynamoDB
 
 alt create document
     user -> web_ui: presses the button to create document\nand provides all the necessary information.\nThe Document might be of any kind.
@@ -17,7 +17,7 @@ alt create document
     document_service --> document_service: generate document
     document_service -> aws_S3: send document to the storage
     return ack & construct metadata
-    document_service -> aws_DynamoDb: save document metadata
+    document_service -> aws_DynamoDB: save document metadata
     return ack
     document_service -> aws_SNS: send document metadata into the AWS SNS
     return ack
@@ -28,7 +28,7 @@ end
 alt download document
     user -> web_ui: open the page of all documents\nand sort for a specific type
     web_ui -> document_service: HTTP/POST:\n/v1/document-service/read?documentType={docType}
-    document_service -> aws_DynamoDb: find all documents of specific type
+    document_service -> aws_DynamoDB: find all documents of specific type
     return documents
     document_service --> document_service: map data from the database\nstructure into the REST response
     document_service --> web_ui: return serialised JSON response
