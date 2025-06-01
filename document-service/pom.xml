@@ -83,7 +83,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>io.github.sergejsvisockis.documentservice.write.Bootstrap</mainClass>
+                    <mainClass>io.github.sergejsvisockis.documentservice.Bootstrap</mainClass>
                 </configuration>
             </plugin>
             <plugin>

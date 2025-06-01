@@ -57,3 +57,53 @@ insurance platform that generates some related documents.
 ## High-level design
 
 ![High level design](./high-level.png)
+
+## Build and run
+An application could be run from both an IDE from the JAR archive or in a Docker container.
+
+### An option from IDE
+Fro that purpose add the following VM options into the application run settings:
+
+```text
+-DACCESS_KEY=your_access_key
+-DSECRET_KEY=your_secret
+-DREGION=eu-north-1
+-DDYNAMODB_ENDPOINT=https://dynamodb.eu-north-1.amazonaws.com
+-DS3_ENDPOINT=https://s3.eu-north-1.amazonaws.com
+-DSNS_ENDPOINT=https://sns.eu-north-1.amazonaws.com
+```
+
+Where your_access_key and your_secret would be your access and secret keys. You can also change the region so as
+endpoint for each AWS service in each region.
+
+### As a standalone JAR
+
+Execute the following commands:
+```shell
+mvn clean package
+java \
+    -DACCESS_KEY=your_access_key \
+    -DSECRET_KEY=your_secret \
+    -DREGION=eu-north-1 \
+    -DDYNAMODB_ENDPOINT=https://dynamodb.eu-north-1.amazonaws.com \
+    -DS3_ENDPOINT=https://s3.eu-north-1.amazonaws.com \
+    -DSNS_ENDPOINT=https://sns.eu-north-1.amazonaws.com \
+    -jar /usr/lib/contexts/document-service.jar
+```
+
+Where your_access_key and your_secret would be your access and secret keys. You can also change the region so as
+endpoint for each AWS service in each region.
+
+### As a Docker container
+
+Execute the following commands:
+```shell
+mvn clean package
+```shell
+cd ./document-service
+docker build . -t document-service
+docker run -e ACCESS_KEY=your_access_key -e SECRET_KEY=your_secret -e REGION=eu-north-1 -e DYNAMODB_ENDPOINT=https://dynamodb.eu-north-1.amazonaws.com -e S3_ENDPOINT=https://s3.eu-north-1.amazonaws.com -e SNS_ENDPOINT=https://sns.eu-north-1.amazonaws.com -p 8080:8080 document-service
+```
+
+Where your_access_key and your_secret would be your access and secret keys. You can also change the region so as
+endpoint for each AWS service in each region.
