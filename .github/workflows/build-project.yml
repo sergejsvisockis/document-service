@@ -31,5 +31,5 @@ jobs:
       run: mvn -B clean install --file pom.xml
     - name: Build Docker image
       run: |
-        cd ./document-service
+        cd ./service
         docker build . -t document-service:$(date +%s)

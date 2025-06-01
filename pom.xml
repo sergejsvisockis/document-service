@@ -20,7 +20,7 @@
 
     <modules>
         <module>api</module>
-        <module>document-service</module>
+        <module>service</module>
     </modules>
 
     <dependencyManagement>
