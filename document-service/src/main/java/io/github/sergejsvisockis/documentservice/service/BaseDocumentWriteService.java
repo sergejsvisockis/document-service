@@ -17,7 +17,6 @@ import java.util.UUID;
  */
 public abstract class BaseDocumentWriteService<T, G> {
 
-    @Autowired
     private DocumentSNSPublisher snsPublisher;
 
     public SentDocumentMetadata process(T request) {
@@ -27,7 +26,7 @@ public abstract class BaseDocumentWriteService<T, G> {
 
         SentDocumentMetadata sentDocumentMetadata = sendToStorage(document);
 
-        String topicArn = snsPublisher.createTopicIfNotExist("document-saved");
+        String topicArn = snsPublisher.createTopicIfNoneExist("document-saved");
         snsPublisher.publish(topicArn, JsonUtil.toJson(sentDocumentMetadata));
 
         return save(sentDocumentMetadata);
@@ -75,5 +74,10 @@ public abstract class BaseDocumentWriteService<T, G> {
                 entityType,
                 fileName
         );
+    }
+
+    @Autowired
+    public void setSnsPublisher(DocumentSNSPublisher snsPublisher) {
+        this.snsPublisher = snsPublisher;
     }
 }

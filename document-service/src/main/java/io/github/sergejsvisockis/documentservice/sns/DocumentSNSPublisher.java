@@ -15,7 +15,7 @@ public class DocumentSNSPublisher {
         this.snsClient = snsClient;
     }
 
-    public String createTopicIfNotExist(String topicName) {
+    public String createTopicIfNoneExist(String topicName) {
         return snsClient.listTopics()
                 .topics()
                 .stream()

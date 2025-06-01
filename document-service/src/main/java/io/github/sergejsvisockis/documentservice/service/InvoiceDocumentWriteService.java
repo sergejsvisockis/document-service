@@ -8,7 +8,6 @@ import io.github.sergejsvisockis.documentservice.repository.Document;
 import io.github.sergejsvisockis.documentservice.repository.DocumentRepository;
 import io.github.sergejsvisockis.documentservice.service.dto.SentDocumentMetadata;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,7 +30,6 @@ public class InvoiceDocumentWriteService extends BaseDocumentWriteService<Invoic
     }
 
     @Override
-    @SneakyThrows
     public SentDocumentMetadata sendToStorage(GeneratedPdfHolder request) {
         documentProvider.store(request.documentAsBytes(), request.fileName());
         return constructSentDocumentResponse(request.fileName(), ".pdf", "invoice");
