@@ -3,11 +3,6 @@ info:
   title: Document Service API
   version: 1.0.0
   description: This is a document service API specification.
-tags:
-  - name: document-service
-
-servers:
-  - url: /document-service/v1
 
 paths:
   /api/v1/read/documents/{documentId}:
