@@ -99,7 +99,6 @@ endpoint for each AWS service in each region.
 Execute the following commands:
 ```shell
 mvn clean package
-```shell
 cd ./document-service
 docker build . -t document-service
 docker run -e ACCESS_KEY=your_access_key -e SECRET_KEY=your_secret -e REGION=eu-north-1 -e DYNAMODB_ENDPOINT=https://dynamodb.eu-north-1.amazonaws.com -e S3_ENDPOINT=https://s3.eu-north-1.amazonaws.com -e SNS_ENDPOINT=https://sns.eu-north-1.amazonaws.com -p 8080:8080 document-service
