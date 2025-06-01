@@ -50,8 +50,10 @@ insurance platform that generates some related documents.
 * Document format - PDF - assume that in the future there might be different document formats as well
 * Documents have to be stored in the AWS S3 bucket - assume that potentially in the future some of the entities might be
   stored in SFTP for example
-* Notification (an event) on each operation (validate, generate, sendToStorage and save) have to be sent into the SNS.
 * Document metadata will be store in a key-value NoSQL datastore AWS DynamoDB
+* Notification (an event) on each operation (validate, generate, sendToStorage and save) have to be sent into the SNS (
+  note that it has to be sent only after the full document lifecycle has complete)
 
 ## High-level design
+
 ![High level design](./high-level.png)
