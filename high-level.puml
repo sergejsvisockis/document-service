@@ -19,8 +19,6 @@ alt create document
     return ack & construct metadata
     document_service -> aws_DynamoDb: save document metadata
     return ack
-    document_service -> aws_SNS: create topic if non exists
-    return topic ARN
     document_service -> aws_SNS: send document metadata into the AWS SNS
     return ack
     document_service --> document_service: remap the metadata response\ninto the REST response

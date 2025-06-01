@@ -33,8 +33,6 @@ class DocumentRepositoryTest {
     @BeforeEach
     void setUp() {
         documentRepository = new DocumentRepository(
-                dynamoDbClient,
-                enhancedClient,
                 dynamoDbTemplate
         );
     }

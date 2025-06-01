@@ -8,12 +8,14 @@ spring:
         access-key: ${ACCESS_KEY}
         secret-key: ${SECRET_KEY}
       dynamodb:
-        region: ${REGION}
-        endpoint: ${DYNAMODB_ENDPOINT}
+        region: eu-north-1
+        endpoint: https://dynamodb.eu-north-1.amazonaws.com
       s3:
-        region: ${REGION}
-        endpoint: ${S3_ENDPOINT}
+        region: eu-north-1
+        endpoint: https://s3.eu-north-1.amazonaws.com
+        bucket: insurtechstorage
       sns:
         enabled: true
-        region: ${REGION}
-        endpoint: ${SNS_ENDPOINT}
+        region: eu-north-1
+        endpoint: https://sns.eu-north-1.amazonaws.com
+        topic-arn: arn:aws:sns:eu-north-1:117863533677:document-saved

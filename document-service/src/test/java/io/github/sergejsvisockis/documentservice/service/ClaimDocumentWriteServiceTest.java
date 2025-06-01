@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -117,7 +116,6 @@ class ClaimDocumentWriteServiceTest {
         // Mock dependencies
         when(pdfGenerator.generatePdf(request)).thenReturn(pdfHolder);
         when(documentMapper.map(any(SentDocumentMetadata.class))).thenReturn(document);
-        when(snsPublisher.createTopicIfNoneExist("document-saved")).thenReturn("topic-arn");
 
         // Explicitly set the snsPublisher
         claimDocumentWriteService.setSnsPublisher(snsPublisher);
@@ -130,8 +128,7 @@ class ClaimDocumentWriteServiceTest {
         verify(documentProvider).store(pdfHolder.documentAsBytes(), pdfHolder.fileName());
         verify(documentMapper).map(any(SentDocumentMetadata.class));
         verify(documentRepository).save(document);
-        verify(snsPublisher).createTopicIfNoneExist("document-saved");
-        verify(snsPublisher).publish(eq("topic-arn"), anyString());
+        verify(snsPublisher).publish(anyString());
         assertEquals("claim", result.entityType());
         assertEquals(fileName, result.fileName());
         assertEquals(uuid, result.id());

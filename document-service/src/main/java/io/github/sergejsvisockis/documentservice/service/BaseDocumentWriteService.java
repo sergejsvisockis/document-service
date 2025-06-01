@@ -28,8 +28,7 @@ public abstract class BaseDocumentWriteService<T, G> {
 
         SentDocumentMetadata savedDocument = save(sentDocumentMetadata);
 
-        String topicArn = snsPublisher.createTopicIfNoneExist("document-saved");
-        snsPublisher.publish(topicArn, JsonUtil.toJson(savedDocument));
+        snsPublisher.publish(JsonUtil.toJson(savedDocument));
 
         return savedDocument;
     }

@@ -58,6 +58,36 @@ insurance platform that generates some related documents.
 
 ![High level design](./high-level.png)
 
+## Prepare an AWS services
+
+Make DynamoDB table:
+
+```shell
+aws dynamodb create-table \
+    --table-name document \
+    --attribute-definitions AttributeName=documentId,AttributeType=S \
+    --key-schema AttributeName=documentId,KeyType=HASH \
+    --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
+```
+
+Make an SNS topic:
+
+```shell
+aws sns create-topic --name document-saved
+```
+
+An ARN has to be changed in an `application.yaml` or otherwise a new Spring Profile could be created or that one passed
+from as VM arguments.
+
+Make an S3 bucket:
+
+```shell
+aws s3api create-bucket \
+    --bucket insurtechstorage \
+    --region eu-north-1 \
+    --create-bucket-configuration LocationConstraint=eu-north-1
+```
+
 ## Build and run
 An application could be run from both an IDE from the JAR archive or in a Docker container.
 
@@ -67,32 +97,19 @@ Fro that purpose add the following VM options into the application run settings:
 ```text
 -DACCESS_KEY=your_access_key
 -DSECRET_KEY=your_secret
--DREGION=eu-north-1
--DDYNAMODB_ENDPOINT=https://dynamodb.eu-north-1.amazonaws.com
--DS3_ENDPOINT=https://s3.eu-north-1.amazonaws.com
--DSNS_ENDPOINT=https://sns.eu-north-1.amazonaws.com
 ```
 
-Where your_access_key and your_secret would be your access and secret keys. You can also change the region so as
-endpoint for each AWS service in each region.
+Where your_access_key and your_secret would be your access and secret keys.
 
 ### As a standalone JAR
 
 Execute the following commands:
 ```shell
 mvn clean package
-java \
-    -DACCESS_KEY=your_access_key \
-    -DSECRET_KEY=your_secret \
-    -DREGION=eu-north-1 \
-    -DDYNAMODB_ENDPOINT=https://dynamodb.eu-north-1.amazonaws.com \
-    -DS3_ENDPOINT=https://s3.eu-north-1.amazonaws.com \
-    -DSNS_ENDPOINT=https://sns.eu-north-1.amazonaws.com \
-    -jar /usr/lib/contexts/document-service.jar
+java -DACCESS_KEY=${ACCESS_KEY} -DSECRET_KEY=${SECRET_KEY} -jar ./document-service/target/document-service-1.0-SNAPSHOT.jar
 ```
 
-Where your_access_key and your_secret would be your access and secret keys. You can also change the region so as
-endpoint for each AWS service in each region.
+Where your_access_key and your_secret would be your access and secret keys.
 
 ### As a Docker container
 
@@ -101,8 +118,7 @@ Execute the following commands:
 mvn clean package
 cd ./document-service
 docker build . -t document-service
-docker run -e ACCESS_KEY=your_access_key -e SECRET_KEY=your_secret -e REGION=eu-north-1 -e DYNAMODB_ENDPOINT=https://dynamodb.eu-north-1.amazonaws.com -e S3_ENDPOINT=https://s3.eu-north-1.amazonaws.com -e SNS_ENDPOINT=https://sns.eu-north-1.amazonaws.com -p 8080:8080 document-service
+docker run -e ACCESS_KEY=your_access_key -e SECRET_KEY=your_secret -p 8080:8080 document-service
 ```
 
-Where your_access_key and your_secret would be your access and secret keys. You can also change the region so as
-endpoint for each AWS service in each region.
+Where your_access_key and your_secret would be your access and secret keys.

@@ -30,71 +30,15 @@ class DocumentSNSPublisherTest {
     private DocumentSNSPublisher documentSNSPublisher;
 
     @Test
-    void shouldNotCreateTopicIfOneExists() {
-        // given
-        String topicName = "test-topic";
-        String expectedTopicArn = "arn:aws:sns:us-east-1:123456789012:test-topic";
-
-        // Create a mock CreateTopicResponse in case createTopic is called
-        CreateTopicResponse createTopicResponse = CreateTopicResponse.builder()
-                .topicArn(expectedTopicArn)
-                .build();
-        when(snsClient.createTopic(any(CreateTopicRequest.class))).thenReturn(createTopicResponse);
-
-        Topic topic = Topic.builder().topicArn(expectedTopicArn).build();
-        ListTopicsResponse listTopicsResponse = ListTopicsResponse.builder()
-                .topics(List.of(topic))
-                .build();
-
-        when(snsClient.listTopics()).thenReturn(listTopicsResponse);
-
-        // when
-        String result = documentSNSPublisher.createTopicIfNoneExist(topicName);
-
-        // then
-        assertEquals(expectedTopicArn, result);
-        verify(snsClient).listTopics();
-    }
-
-    @Test
-    void shouldCreateTopicIfNoneExists() {
-        // given
-        String topicName = "test-topic";
-        String expectedTopicArn = "arn:aws:sns:us-east-1:123456789012:test-topic";
-
-        // No matching topic in the list
-        Topic otherTopic = Topic.builder().topicArn("arn:aws:sns:us-east-1:123456789012:other-topic").build();
-        ListTopicsResponse listTopicsResponse = ListTopicsResponse.builder()
-                .topics(List.of(otherTopic))
-                .build();
-
-        CreateTopicResponse createTopicResponse = CreateTopicResponse.builder()
-                .topicArn(expectedTopicArn)
-                .build();
-
-        when(snsClient.listTopics()).thenReturn(listTopicsResponse);
-        when(snsClient.createTopic(any(CreateTopicRequest.class))).thenReturn(createTopicResponse);
-
-        // when
-        String result = documentSNSPublisher.createTopicIfNoneExist(topicName);
-
-        // then
-        assertEquals(expectedTopicArn, result);
-        verify(snsClient).listTopics();
-        verify(snsClient).createTopic(any(CreateTopicRequest.class));
-    }
-
-    @Test
     void shouldPublishMessageIntoTheTopic() {
         // given
-        String topicArn = "arn:aws:sns:us-east-1:123456789012:test-topic";
         String message = "test-message";
 
         PublishResponse publishResponse = PublishResponse.builder().build();
         when(snsClient.publish(any(PublishRequest.class))).thenReturn(publishResponse);
 
         // when
-        documentSNSPublisher.publish(topicArn, message);
+        documentSNSPublisher.publish(message);
 
         // then
         verify(snsClient).publish(any(PublishRequest.class));
