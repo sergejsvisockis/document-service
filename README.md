@@ -106,7 +106,9 @@ Where your_access_key and your_secret would be your access and secret keys.
 Execute the following commands:
 ```shell
 mvn clean package
-java -DACCESS_KEY=your_access_key -DSECRET_KEY=your_secret -jar ./document-service/target/document-service-1.0-SNAPSHOT.jar
+java -DACCESS_KEY=your_access_key \
+     -DSECRET_KEY=your_secret \
+     -jar ./document-service/target/document-service-1.0-SNAPSHOT.jar
 ```
 
 Where your_access_key and your_secret would be your access and secret keys.
@@ -118,7 +120,10 @@ Execute the following commands:
 mvn clean package
 cd ./document-service
 docker build . -t document-service
-docker run -e ACCESS_KEY=your_access_key -e SECRET_KEY=your_secret -p 8080:8080 document-service
+docker run \
+    -e ACCESS_KEY=your_access_key \
+    -e SECRET_KEY=your_secret \
+    -p 8080:8080 document-service
 ```
 
 Where your_access_key and your_secret would be your access and secret keys.
