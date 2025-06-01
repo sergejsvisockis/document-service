@@ -1,6 +1,7 @@
 package io.github.sergejsvisockis.documentservice.repository;
 
 import io.awspring.cloud.dynamodb.DynamoDbTemplate;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import software.amazon.awssdk.enhanced.dynamodb.Expression;
 import software.amazon.awssdk.enhanced.dynamodb.model.ScanEnhancedRequest;
@@ -10,13 +11,10 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
+@RequiredArgsConstructor
 public class DocumentRepository {
 
     private final DynamoDbTemplate dynamoDbTemplate;
-
-    public DocumentRepository(DynamoDbTemplate dynamoDbTemplate) {
-        this.dynamoDbTemplate = dynamoDbTemplate;
-    }
 
     public List<Document> findAllByType(String type) {
         ScanEnhancedRequest request = ScanEnhancedRequest.builder()
