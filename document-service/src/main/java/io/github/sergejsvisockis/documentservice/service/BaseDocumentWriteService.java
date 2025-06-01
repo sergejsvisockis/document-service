@@ -26,10 +26,12 @@ public abstract class BaseDocumentWriteService<T, G> {
 
         SentDocumentMetadata sentDocumentMetadata = sendToStorage(document);
 
-        String topicArn = snsPublisher.createTopicIfNoneExist("document-saved");
-        snsPublisher.publish(topicArn, JsonUtil.toJson(sentDocumentMetadata));
+        SentDocumentMetadata savedDocument = save(sentDocumentMetadata);
 
-        return save(sentDocumentMetadata);
+        String topicArn = snsPublisher.createTopicIfNoneExist("document-saved");
+        snsPublisher.publish(topicArn, JsonUtil.toJson(savedDocument));
+
+        return savedDocument;
     }
 
     /**
