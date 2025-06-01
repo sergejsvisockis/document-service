@@ -106,7 +106,7 @@ Where your_access_key and your_secret would be your access and secret keys.
 Execute the following commands:
 ```shell
 mvn clean package
-java -DACCESS_KEY=${ACCESS_KEY} -DSECRET_KEY=${SECRET_KEY} -jar ./document-service/target/document-service-1.0-SNAPSHOT.jar
+java -DACCESS_KEY=your_access_key -DSECRET_KEY=your_secret -jar ./document-service/target/document-service-1.0-SNAPSHOT.jar
 ```
 
 Where your_access_key and your_secret would be your access and secret keys.
