@@ -52,3 +52,6 @@ insurance platform that generates some related documents.
   stored in SFTP for example
 * Notification (an event) on each operation (validate, generate, sendToStorage and save) have to be sent into the SNS.
 * Document metadata will be store in a key-value NoSQL datastore AWS DynamoDB
+
+## High-level design
+![High level design](./high-level.png)

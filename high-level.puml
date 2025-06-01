@@ -1,0 +1,29 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor user
+actor web_ui
+control document_service
+control aws_S3
+queue aws_SNS
+control aws_DynamoDB
+
+user -> web_ui: presses the button to create document\nand provides all the necessary information.\nThe Document might be of any kind.
+web_ui -> document_service: /v1/document-service/write/{entity_name}
+document_service --> document_service: validate request
+document_service --> document_service: generate document
+document_service -> aws_S3: send document to the storage
+return ack & construct metadata
+document_service -> aws_DynamoDb: save document metadata
+return ack
+document_service -> aws_SNS: create topic if non exists
+return topic ARN
+document_service -> aws_SNS: send document metadata into the AWS SNS
+return ack
+document_service --> document_service: remap the metadata response\ninto the REST response
+document_service --> web_ui: return serialised JSON response
+web_ui --> user: represent an acknowledgement
+
+@enduml
