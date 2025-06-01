@@ -1,6 +1,6 @@
 package io.github.sergejsvisockis.documentservice.service;
 
-import com.sergejs.documentservice.api.model.InvoiceDocumentRequest;
+import io.github.sergejsvisockis.documentservice.api.model.InvoiceDocumentRequest;
 import io.github.sergejsvisockis.documentservice.pdf.GeneratedPdfHolder;
 import io.github.sergejsvisockis.documentservice.pdf.PdfGenerator;
 import io.github.sergejsvisockis.documentservice.provider.S3DocumentProvider;

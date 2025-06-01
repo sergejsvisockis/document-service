@@ -1,8 +1,7 @@
 package io.github.sergejsvisockis.documentservice.api;
 
-import com.sergejs.documentservice.api.DocumentReadServiceApi;
-import com.sergejs.documentservice.api.model.DocumentReadResponse;
-import com.sergejs.documentservice.api.model.DocumentResponse;
+import io.github.sergejsvisockis.documentservice.api.model.DocumentReadResponse;
+import io.github.sergejsvisockis.documentservice.api.model.DocumentResponse;
 import io.github.sergejsvisockis.documentservice.repository.Document;
 import io.github.sergejsvisockis.documentservice.service.DocumentReadService;
 import lombok.RequiredArgsConstructor;

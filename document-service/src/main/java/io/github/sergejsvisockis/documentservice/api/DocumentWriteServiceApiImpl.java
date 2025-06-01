@@ -1,10 +1,9 @@
 package io.github.sergejsvisockis.documentservice.api;
 
-import com.sergejs.documentservice.api.DocumentWriteServiceApi;
-import com.sergejs.documentservice.api.model.ClaimDocumentRequest;
-import com.sergejs.documentservice.api.model.DocumentResponse;
-import com.sergejs.documentservice.api.model.InvoiceDocumentRequest;
-import com.sergejs.documentservice.api.model.PolicyDocumentRequest;
+import io.github.sergejsvisockis.documentservice.api.model.ClaimDocumentRequest;
+import io.github.sergejsvisockis.documentservice.api.model.DocumentResponse;
+import io.github.sergejsvisockis.documentservice.api.model.InvoiceDocumentRequest;
+import io.github.sergejsvisockis.documentservice.api.model.PolicyDocumentRequest;
 import io.github.sergejsvisockis.documentservice.service.ClaimDocumentWriteService;
 import io.github.sergejsvisockis.documentservice.service.InvoiceDocumentWriteService;
 import io.github.sergejsvisockis.documentservice.service.PolicyDocumentWriteService;
