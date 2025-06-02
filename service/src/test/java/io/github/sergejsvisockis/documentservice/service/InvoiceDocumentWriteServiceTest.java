@@ -1,9 +1,9 @@
 package io.github.sergejsvisockis.documentservice.service;
 
 import io.github.sergejsvisockis.documentservice.api.model.InvoiceDocumentRequest;
-import io.github.sergejsvisockis.documentservice.pdf.GeneratedPdfHolder;
-import io.github.sergejsvisockis.documentservice.pdf.PdfGenerator;
-import io.github.sergejsvisockis.documentservice.provider.S3DocumentProvider;
+import io.github.sergejsvisockis.documentservice.docgen.DocumentGenerator;
+import io.github.sergejsvisockis.documentservice.docgen.pdf.GeneratedPdfHolder;
+import io.github.sergejsvisockis.documentservice.provider.DocumentProvider;
 import io.github.sergejsvisockis.documentservice.repository.Document;
 import io.github.sergejsvisockis.documentservice.repository.DocumentRepository;
 import io.github.sergejsvisockis.documentservice.service.dto.SentDocumentMetadata;
@@ -13,6 +13,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import software.amazon.awssdk.core.ResponseInputStream;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 
 import java.util.UUID;
 
@@ -33,10 +35,10 @@ class InvoiceDocumentWriteServiceTest {
     private DocumentMapper documentMapper;
 
     @Mock
-    private PdfGenerator pdfGenerator;
+    private DocumentGenerator<InvoiceDocumentRequest, GeneratedPdfHolder> pdfDocumentGenerator;
 
     @Mock
-    private S3DocumentProvider documentProvider;
+    private DocumentProvider<ResponseInputStream<GetObjectResponse>, byte[]> documentProvider;
 
     @Mock
     private DocumentSNSPublisher snsPublisher;
@@ -61,14 +63,14 @@ class InvoiceDocumentWriteServiceTest {
         // given
         InvoiceDocumentRequest request = new InvoiceDocumentRequest();
         GeneratedPdfHolder expectedPdf = new GeneratedPdfHolder("test.pdf", new byte[]{1, 2, 3});
-        when(pdfGenerator.generatePdf(request)).thenReturn(expectedPdf);
+        when(pdfDocumentGenerator.generate(request)).thenReturn(expectedPdf);
 
         // when
         GeneratedPdfHolder result = invoiceDocumentWriteService.generate(request);
 
         // then
         assertSame(expectedPdf, result, "Generate should return the PDF from the generator");
-        verify(pdfGenerator).generatePdf(request);
+        verify(pdfDocumentGenerator).generate(request);
     }
 
     @Test
@@ -114,7 +116,7 @@ class InvoiceDocumentWriteServiceTest {
         Document document = new Document();
 
         // Mock dependencies
-        when(pdfGenerator.generatePdf(request)).thenReturn(pdfHolder);
+        when(pdfDocumentGenerator.generate(request)).thenReturn(pdfHolder);
         when(documentMapper.map(any(SentDocumentMetadata.class))).thenReturn(document);
 
         // Explicitly set the snsPublisher
@@ -124,7 +126,7 @@ class InvoiceDocumentWriteServiceTest {
         SentDocumentMetadata result = invoiceDocumentWriteService.process(request);
 
         // then
-        verify(pdfGenerator).generatePdf(request);
+        verify(pdfDocumentGenerator).generate(request);
         verify(documentProvider).store(pdfHolder.documentAsBytes(), pdfHolder.fileName());
         verify(documentMapper).map(any(SentDocumentMetadata.class));
         verify(documentRepository).save(document);

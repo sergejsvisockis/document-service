@@ -1,23 +1,25 @@
 package io.github.sergejsvisockis.documentservice.service;
 
 import io.github.sergejsvisockis.documentservice.api.model.PolicyDocumentRequest;
-import io.github.sergejsvisockis.documentservice.pdf.GeneratedPdfHolder;
-import io.github.sergejsvisockis.documentservice.pdf.PdfGenerator;
-import io.github.sergejsvisockis.documentservice.provider.S3DocumentProvider;
+import io.github.sergejsvisockis.documentservice.docgen.DocumentGenerator;
+import io.github.sergejsvisockis.documentservice.docgen.pdf.GeneratedPdfHolder;
+import io.github.sergejsvisockis.documentservice.provider.DocumentProvider;
 import io.github.sergejsvisockis.documentservice.repository.Document;
 import io.github.sergejsvisockis.documentservice.repository.DocumentRepository;
 import io.github.sergejsvisockis.documentservice.service.dto.SentDocumentMetadata;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import software.amazon.awssdk.core.ResponseInputStream;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 
 @Service
 @RequiredArgsConstructor
 public class PolicyDocumentWriteService extends BaseDocumentWriteService<PolicyDocumentRequest, GeneratedPdfHolder> {
 
-    private final PdfGenerator pdfGenerator;
     private final DocumentRepository documentRepository;
     private final DocumentMapper documentMapper;
-    private final S3DocumentProvider documentProvider;
+    private final DocumentGenerator<PolicyDocumentRequest, GeneratedPdfHolder> pdfDocumentGenerator;
+    private final DocumentProvider<ResponseInputStream<GetObjectResponse>, byte[]> documentProvider;
 
     @Override
     public PolicyDocumentRequest validate(PolicyDocumentRequest request) {
@@ -26,7 +28,7 @@ public class PolicyDocumentWriteService extends BaseDocumentWriteService<PolicyD
 
     @Override
     public GeneratedPdfHolder generate(PolicyDocumentRequest request) {
-        return pdfGenerator.generatePdf(request);
+        return pdfDocumentGenerator.generate(request);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package io.github.sergejsvisockis.documentservice.service;
 
-import io.github.sergejsvisockis.documentservice.provider.S3DocumentProvider;
+import io.github.sergejsvisockis.documentservice.provider.DocumentProvider;
 import io.github.sergejsvisockis.documentservice.repository.Document;
 import io.github.sergejsvisockis.documentservice.repository.DocumentRepository;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 class DocumentReadServiceTest {
 
     @Mock
-    private S3DocumentProvider documentProvider;
+    private DocumentProvider<ResponseInputStream<GetObjectResponse>, byte[]> documentProvider;
 
     @Mock
     private DocumentRepository documentRepository;

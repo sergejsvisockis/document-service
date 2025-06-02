@@ -1,14 +1,16 @@
 package io.github.sergejsvisockis.documentservice.service;
 
 import io.github.sergejsvisockis.documentservice.api.model.ClaimDocumentRequest;
-import io.github.sergejsvisockis.documentservice.pdf.GeneratedPdfHolder;
-import io.github.sergejsvisockis.documentservice.pdf.PdfGenerator;
-import io.github.sergejsvisockis.documentservice.provider.S3DocumentProvider;
+import io.github.sergejsvisockis.documentservice.docgen.DocumentGenerator;
+import io.github.sergejsvisockis.documentservice.docgen.pdf.GeneratedPdfHolder;
+import io.github.sergejsvisockis.documentservice.provider.DocumentProvider;
 import io.github.sergejsvisockis.documentservice.repository.Document;
 import io.github.sergejsvisockis.documentservice.repository.DocumentRepository;
 import io.github.sergejsvisockis.documentservice.service.dto.SentDocumentMetadata;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import software.amazon.awssdk.core.ResponseInputStream;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 
 @Service
 @RequiredArgsConstructor
@@ -16,8 +18,8 @@ public class ClaimDocumentWriteService extends BaseDocumentWriteService<ClaimDoc
 
     private final DocumentRepository documentRepository;
     private final DocumentMapper documentMapper;
-    private final PdfGenerator pdfGenerator;
-    private final S3DocumentProvider documentProvider;
+    private final DocumentGenerator<ClaimDocumentRequest, GeneratedPdfHolder> pdfDocumentGenerator;
+    private final DocumentProvider<ResponseInputStream<GetObjectResponse>, byte[]> documentProvider;
 
     @Override
     public ClaimDocumentRequest validate(ClaimDocumentRequest request) {
@@ -26,7 +28,7 @@ public class ClaimDocumentWriteService extends BaseDocumentWriteService<ClaimDoc
 
     @Override
     public GeneratedPdfHolder generate(ClaimDocumentRequest request) {
-        return pdfGenerator.generatePdf(request);
+        return pdfDocumentGenerator.generate(request);
     }
 
     @Override

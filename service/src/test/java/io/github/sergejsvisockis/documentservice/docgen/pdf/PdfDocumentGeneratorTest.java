@@ -1,4 +1,4 @@
-package io.github.sergejsvisockis.documentservice.pdf;
+package io.github.sergejsvisockis.documentservice.docgen.pdf;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,10 +10,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
-class PdfGeneratorTest {
+class PdfDocumentGeneratorTest {
 
     @InjectMocks
-    private PdfGenerator pdfGenerator;
+    private PdfDocumentGenerator<TestRequest> pdfDocumentGenerator;
 
     @Test
     void shouldCreatePdfWithCorrectContent() {
@@ -21,7 +21,7 @@ class PdfGeneratorTest {
         TestRequest request = new TestRequest("Test Value");
 
         // when
-        GeneratedPdfHolder result = pdfGenerator.generatePdf(request);
+        GeneratedPdfHolder result = pdfDocumentGenerator.generate(request);
 
         // then
         assertNotNull(result);
@@ -37,8 +37,8 @@ class PdfGeneratorTest {
         TestRequest request = new TestRequest("Test Value");
 
         // when
-        GeneratedPdfHolder firstResult = pdfGenerator.generatePdf(request);
-        GeneratedPdfHolder secondResult = pdfGenerator.generatePdf(request);
+        GeneratedPdfHolder firstResult = pdfDocumentGenerator.generate(request);
+        GeneratedPdfHolder secondResult = pdfDocumentGenerator.generate(request);
 
         // then
         assertNotEquals(firstResult.fileName(), secondResult.fileName());

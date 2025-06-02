@@ -1,5 +1,6 @@
-package io.github.sergejsvisockis.documentservice.pdf;
+package io.github.sergejsvisockis.documentservice.docgen.pdf;
 
+import io.github.sergejsvisockis.documentservice.docgen.DocumentGenerator;
 import io.github.sergejsvisockis.documentservice.utils.JsonUtil;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -15,17 +16,17 @@ import java.util.UUID;
 
 @Slf4j
 @Component
-public class PdfGenerator {
+public class PdfDocumentGenerator<T> implements DocumentGenerator<T, GeneratedPdfHolder> {
 
     /**
      * NOTE: that this implementation is very simplistic and is not supposed to be production-ready.
      *
      * @param request PDF documentAsBytes content.
-     * @param <T>     the type out of which to generate.
      * @return generated PDF metadata holder.
      */
+    @Override
     @SneakyThrows
-    public <T> GeneratedPdfHolder generatePdf(T request) {
+    public GeneratedPdfHolder generate(T request) {
         PDDocument document = new PDDocument();
         PDPage page = new PDPage();
         document.addPage(page);
@@ -52,5 +53,4 @@ public class PdfGenerator {
 
         return new GeneratedPdfHolder(documentName, out.toByteArray());
     }
-
 }
