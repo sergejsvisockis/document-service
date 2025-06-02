@@ -21,7 +21,7 @@ public class PdfDocumentGenerator<T> implements DocumentGenerator<T, GeneratedPd
     /**
      * NOTE: that this implementation is very simplistic and is not supposed to be production-ready.
      *
-     * @param request PDF documentAsBytes content.
+     * @param request PDF document content.
      * @return generated PDF metadata holder.
      */
     @Override
