@@ -14,7 +14,8 @@ import java.util.UUID;
  * The same comes towards the document type some entities might require PDF while others DOCX for example.
  * This is why an implementation has to be as generic as possible.
  *
- * @param <T> the request body coming out of the REST service.
+ * @param <T> the request type coming out of the REST service.
+ * @param <G> the response type of the object constructed after the document being generated.
  */
 public abstract class BaseDocumentWriteService<T, G> {
 
