@@ -23,20 +23,20 @@ public class DocumentWriteServiceApiImpl implements DocumentWriteServiceApi {
 
     @Override
     public ResponseEntity<DocumentResponse> writeClaimDocument(ClaimDocumentRequest claimDocumentRequest) {
-        return process(claimDocumentWriteService.process(claimDocumentRequest));
+        return map(claimDocumentWriteService.process(claimDocumentRequest));
     }
 
     @Override
     public ResponseEntity<DocumentResponse> writeInvoiceDocument(InvoiceDocumentRequest invoiceDocumentRequest) {
-        return process(invoiceDocumentWriteService.process(invoiceDocumentRequest));
+        return map(invoiceDocumentWriteService.process(invoiceDocumentRequest));
     }
 
     @Override
     public ResponseEntity<DocumentResponse> writePolicyDocument(PolicyDocumentRequest policyDocumentRequest) {
-        return process(policyDocumentWriteService.process(policyDocumentRequest));
+        return map(policyDocumentWriteService.process(policyDocumentRequest));
     }
 
-    private ResponseEntity<DocumentResponse> process(SentDocumentMetadata policyDocumentWriteService) {
+    private ResponseEntity<DocumentResponse> map(SentDocumentMetadata policyDocumentWriteService) {
         DocumentResponse mappedDocument = mapper.mapMetadataToDocumentResponse(policyDocumentWriteService);
         return ResponseEntity.ok(mappedDocument);
     }
