@@ -24,8 +24,8 @@ public class DocumentReadServiceApiImpl implements DocumentReadServiceApi {
     private final DocumentResponseMapper documentResponseMapper;
 
     @Override
-    public ResponseEntity<DocumentReadResponse> getDocumentMetadata(String documentType) {
-        List<Document> allDocuments = documentReadService.getDocumentMetadata(documentType);
+    public ResponseEntity<DocumentReadResponse> getDocumentMetadata(String entityType) {
+        List<Document> allDocuments = documentReadService.getDocumentMetadata(entityType);
 
         List<DocumentResponse> documents = documentResponseMapper.mapDocumentsToDocumentResponses(allDocuments);
 
