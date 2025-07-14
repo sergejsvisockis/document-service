@@ -36,7 +36,7 @@ public class S3DocumentProvider implements DocumentProvider<ResponseInputStream<
                 PutObjectRequest.builder()
                         .bucket(bucket)
                         .key(fileName)
-                        .contentType(MediaType.APPLICATION_PDF.toString())
+                        .contentType(MediaType.APPLICATION_PDF_VALUE)
                         .build(),
                 RequestBody.fromBytes(document)
         );
