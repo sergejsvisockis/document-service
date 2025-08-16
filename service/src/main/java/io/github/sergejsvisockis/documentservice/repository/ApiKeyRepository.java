@@ -8,7 +8,6 @@ import software.amazon.awssdk.enhanced.dynamodb.model.ScanEnhancedRequest;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 import java.util.Map;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -16,7 +15,7 @@ public class ApiKeyRepository {
 
     private final DynamoDbTemplate dynamoDbTemplate;
 
-    public Optional<ApiKey> findApiKey(String key) {
+    public ApiKey findApiKey(String key) {
         ScanEnhancedRequest request = ScanEnhancedRequest.builder()
                 .filterExpression(Expression.builder()
                         .expression("apiKey = :key")
@@ -26,7 +25,8 @@ public class ApiKeyRepository {
         return dynamoDbTemplate.scan(request, ApiKey.class)
                 .stream()
                 .flatMap(p -> p.items().stream())
-                .findFirst();
+                .findFirst()
+                .orElse(null);
     }
 
 }
