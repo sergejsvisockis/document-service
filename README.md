@@ -53,6 +53,7 @@ insurance platform that generates some related documents.
 * Document metadata will be store in a key-value NoSQL datastore AWS DynamoDB
 * Notification (an event) on each operation (validate, generate, sendToStorage and save) have to be sent into the SNS (
   note that it has to be sent only after the full document lifecycle has complete)
+* An API has to be protected with an API key, so the header `x-api-key` must be provided with each request
 
 ## High-level design
 
