@@ -15,11 +15,11 @@ public class ApiKeyRepository {
 
     private final DynamoDbTemplate dynamoDbTemplate;
 
-    public ApiKey findApiKey(String key) {
+    public ApiKey findApiKey(String keyId) {
         ScanEnhancedRequest request = ScanEnhancedRequest.builder()
                 .filterExpression(Expression.builder()
-                        .expression("apiKey = :key")
-                        .expressionValues(Map.of(":key", AttributeValue.fromS(key)))
+                        .expression("apiKeyId = :keyId")
+                        .expressionValues(Map.of(":keyId", AttributeValue.fromS(keyId)))
                         .build())
                 .build();
         return dynamoDbTemplate.scan(request, ApiKey.class)

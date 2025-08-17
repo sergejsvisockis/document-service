@@ -17,6 +17,7 @@ public class ApiKey {
 
     private String apiKeyId;
     private String apiKey;
+    private String salt;
     private String assignee;
     private String assigneeContactDetails;
     private String expirationDate;
@@ -29,6 +30,11 @@ public class ApiKey {
     @DynamoDbAttribute("apiKey")
     public String getApiKey() {
         return apiKey;
+    }
+
+    @DynamoDbAttribute("salt")
+    public String getSalt() {
+        return salt;
     }
 
     @DynamoDbAttribute("assignee")

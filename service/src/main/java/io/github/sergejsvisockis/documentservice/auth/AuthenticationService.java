@@ -11,8 +11,10 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.concurrent.TimeUnit;
+
+import static io.github.sergejsvisockis.documentservice.utils.ApiKeyUtil.decodeSalt;
+import static io.github.sergejsvisockis.documentservice.utils.ApiKeyUtil.hashApiKey;
 
 @Service
 public class AuthenticationService {
@@ -40,39 +42,46 @@ public class AuthenticationService {
             throw new BadCredentialsException(INCORRECT_API_KEY_MESSAGE);
         }
 
-        ApiKey apiAuthKey = findApiAuthKey(apiKey);
+        String[] splitHeader = apiKey.split("\\.");
+        String keyId = splitHeader[0];
+        String headerApiKey = splitHeader[1];
 
-        if (!isValid(apiAuthKey)) {
-            throw new BadCredentialsException(API_KEY_EXPIRED_MESSAGE);
-        }
+        ApiKey apiAuthKey = findApiAuthKey(keyId);
+        isValid(apiAuthKey, headerApiKey);
 
         return new ApiKeyAuthentication(apiKey, AuthorityUtils.NO_AUTHORITIES);
     }
 
-    private boolean isValid(ApiKey apiKey) {
+    private void isValid(ApiKey apiKey, String headerApiKey) {
+        byte[] decodedSalt = decodeSalt(apiKey.getSalt());
+
+        String hashedApiKey = hashApiKey(headerApiKey, decodedSalt);
+
+        if (!hashedApiKey.equals(apiKey.getApiKey())) {
+            throw new BadCredentialsException(INCORRECT_API_KEY_MESSAGE);
+        }
+
         LocalDateTime validTo = LocalDateTime.parse(apiKey.getExpirationDate());
-        return LocalDateTime.now().isBefore(validTo);
+        if (LocalDateTime.now().isEqual(validTo)) {
+            throw new BadCredentialsException(API_KEY_EXPIRED_MESSAGE);
+        }
     }
 
-    private ApiKey findApiAuthKey(String key) {
-        ApiKey fromCache = cache.getIfPresent(key);
+    private ApiKey findApiAuthKey(String keyId) {
+        ApiKey fromCache = cache.getIfPresent(keyId);
 
         if (fromCache != null) {
             return fromCache;
         }
 
-        ApiKey apiKey = apiKeyRepository.findApiKey(encodeApiKey(key));
+        ApiKey apiKey = apiKeyRepository.findApiKey(keyId);
 
         if (apiKey == null) {
             throw new BadCredentialsException(NO_API_KEY_FOUND_MESSAGE);
         }
 
-        cache.put(key, apiKey);
+        cache.put(keyId, apiKey);
         return apiKey;
-    }
-
-    private String encodeApiKey(String key) {
-        return Base64.getEncoder().encodeToString(key.getBytes());
     }
 
 }
